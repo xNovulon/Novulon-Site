@@ -36,6 +36,16 @@
   a { color: inherit; }
   img { max-width: 100%; }
   [hidden] { display: none !important; }
+
+  /* scrollbars in the site's colours (page and app windows) */
+  html, dialog { scrollbar-width: thin; scrollbar-color: #c94fd8 #0b0812; }
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-track { background: #0b0812; }
+  ::-webkit-scrollbar-thumb { border-radius: 999px; border: 3px solid #0b0812; background: linear-gradient(180deg, var(--pink), var(--violet)); }
+  ::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, #ff77b3, #c084fc); }
+  ::-webkit-scrollbar-corner { background: #0b0812; }
+  dialog::-webkit-scrollbar-track { background: var(--ground-2); }
+  dialog::-webkit-scrollbar-thumb { border-color: var(--ground-2); }
   h1, h2, h3 { margin: 0; font-family: var(--display); line-height: .95; text-wrap: balance; }
   p { margin: 0; }
   :focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 8px; }

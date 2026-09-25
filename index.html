@@ -8,7 +8,7 @@
 <title>Novulon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
 <style>
   /* One deliberate look: night violet, the same world as the apps. */
   :root {
@@ -25,7 +25,7 @@
     --violet: #a855f7;
     --amber: #fbbf24;
     --mint: #4ade9e;
-    --display: "Syne", "Segoe UI", system-ui, sans-serif;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
     --body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
     --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
     --grad: linear-gradient(100deg, var(--pink), var(--violet));
@@ -63,35 +63,21 @@
   .coffee svg { width: 17px; height: 17px; }
 
   /* ---------------------------------------------------------------- hero */
-  .hero { position: relative; isolation: isolate; padding-block: clamp(70px, 12vw, 150px) clamp(60px, 9vw, 110px); overflow: hidden; }
+  .hero { position: relative; isolation: isolate; padding-block: clamp(48px, min(11vw, 14vh), 150px) clamp(40px, min(8vw, 10vh), 110px); overflow: hidden; }
   #sky { position: absolute; inset: 0; width: 100%; height: 100%; z-index: -2; }
   .hero::after { content: ""; position: absolute; inset: auto 0 0 0; height: 45%; z-index: -1; background: linear-gradient(to bottom, transparent, var(--ground)); }
   .hero .wrap { display: grid; gap: 28px; }
-  .hero h1 { font-size: clamp(64px, 17vw, 250px); font-weight: 800; letter-spacing: -.045em; line-height: .82; }
-  .hero h1 .solid { display: block; background: linear-gradient(95deg, #fff 0%, #ffd2e6 38%, var(--pink) 64%, var(--violet) 100%);
-    -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .hero h1 .ghost { display: block; color: transparent; -webkit-text-stroke: 1.5px rgba(255, 255, 255, .28); font-size: .42em; letter-spacing: -.02em; margin-top: .12em; }
-  .hero .intro { display: flex; gap: 28px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
+  .hero h1 { font-size: clamp(48px, 20vw, 260px); font-weight: 800; letter-spacing: -.04em; line-height: .86; white-space: nowrap; }
+  .hero h1 .solid { display: inline-block; background: linear-gradient(95deg, #fff 0%, #ffd2e6 38%, var(--pink) 64%, var(--violet) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; }  .hero .intro { display: flex; gap: 28px; align-items: end; justify-content: space-between; flex-wrap: wrap; }
   .hero .intro p { font-size: clamp(18px, 2.1vw, 23px); color: #d9d0ea; max-width: 34ch; line-height: 1.45; }
   .scroll-cue { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; font-weight: 700; }
   .scroll-cue i { width: 46px; height: 46px; border-radius: 50%; border: 1px solid var(--line-2); display: grid; place-items: center; transition: background .2s, border-color .2s; }
   .scroll-cue:hover i { background: rgba(255, 79, 154, .14); border-color: var(--pink); }
   .scroll-cue svg { width: 18px; height: 18px; }
 
-  /* ---------------------------------------------------------------- marquee */
-  .ribbon { border-block: 1px solid var(--line); background: var(--ground-2); overflow: hidden; }
-  .ribbon .track { display: flex; gap: 48px; width: max-content; padding-block: 16px; animation: slide 38s linear infinite; }
-  .ribbon span { font: 700 clamp(22px, 3vw, 34px)/1 var(--display); letter-spacing: -.01em; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px rgba(255, 255, 255, .35); }
-  .ribbon span.on { color: var(--text); -webkit-text-stroke: 0; }
-  .ribbon b { color: var(--pink); font: 700 26px/1 var(--display); align-self: center; }
-  @keyframes slide { to { transform: translateX(-50%); } }
-
   /* ---------------------------------------------------------------- work */
   .work { padding-block: clamp(70px, 10vw, 130px) 40px; }
-  .work-head { display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; margin-bottom: 54px; }
-  .work-head h2 { font-size: clamp(44px, 7vw, 96px); font-weight: 800; letter-spacing: -.04em; }
-  .work-head h2 em { font-style: normal; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
-  .work-head p { color: var(--muted); max-width: 36ch; }
 
   /* a group of projects (add more groups like this one) */
   .group { display: grid; gap: 26px; margin-bottom: 90px; }
@@ -129,16 +115,9 @@
   .card:hover .open i { transform: translateX(4px); }
   .card .open svg { width: 16px; height: 16px; }
 
-  .soon { margin-top: 10px; border: 1px dashed var(--line-2); border-radius: 22px; padding: 26px 28px; display: flex; gap: 18px; align-items: center; justify-content: space-between; flex-wrap: wrap; }
-  .soon b { font: 800 22px/1.1 var(--display); }
-  .soon p { color: var(--muted); }
-  .dots { display: flex; gap: 6px; }
-  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--pink); animation: blink 1.4s infinite; }
-  .dots i:nth-child(2) { animation-delay: .2s; background: #d45ae0; } .dots i:nth-child(3) { animation-delay: .4s; background: var(--violet); }
-  @keyframes blink { 0%, 100% { opacity: .25; } 50% { opacity: 1; } }
 
   /* ---------------------------------------------------------------- app window */
-  dialog { width: min(1120px, calc(100vw - 24px)); max-height: calc(100vh - 32px); padding: 0; border: 1px solid var(--line-2); border-radius: 28px;
+  dialog { width: min(1120px, calc(100vw - 24px)); max-height: calc(100vh - 32px); max-height: calc(100dvh - 24px); padding: 0; border: 1px solid var(--line-2); border-radius: 28px;
     background: var(--ground-2); color: var(--text); overflow: auto; overscroll-behavior: contain; }
   dialog::backdrop { background: rgba(4, 2, 8, .78); backdrop-filter: blur(8px); }
   dialog[open] { animation: pop .45s cubic-bezier(.2, .8, .2, 1); }
@@ -161,9 +140,6 @@
   .btn.primary { background: var(--grad); border-color: transparent; color: #fff; box-shadow: 0 14px 40px -12px rgba(255, 79, 154, .8); }
   .btn.primary:hover { box-shadow: 0 18px 50px -10px rgba(255, 79, 154, .95); }
   .btn svg { width: 18px; height: 18px; }
-  .ghnote { color: var(--muted); font-size: 14.5px; display: flex; gap: 10px; align-items: baseline; }
-  .ghnote b { color: var(--text); }
-  .ghnote a { font-weight: 700; color: var(--text); }
   .sub { font: 600 11.5px/1 var(--mono); letter-spacing: .18em; text-transform: uppercase; color: var(--pink); }
   .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 14px; }
   .feat { padding: 20px; border-radius: 18px; background: rgba(255, 255, 255, .03); border: 1px solid var(--line); display: grid; gap: 6px; }
@@ -182,19 +158,30 @@
   .gallery figcaption { padding: 12px 16px; font-size: 13.5px; color: var(--muted); }
 
   /* ---------------------------------------------------------------- footer */
-  footer { margin-top: 40px; border-top: 1px solid var(--line); padding-block: 60px 50px; overflow: hidden; }
+  footer { margin-top: 20px; border-top: 1px solid var(--line); padding-block: 34px 40px; }
   footer .big { font: 800 clamp(60px, 16vw, 230px)/.8 var(--display); letter-spacing: -.05em; color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, .14); user-select: none; white-space: nowrap; }
-  footer .fine { margin-top: 34px; display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--faint); font-size: 13px; }
+  footer .fine { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--faint); font-size: 13px; }
   footer .fine p { max-width: 70ch; }
 
   @media (max-width: 860px) {
     .cards { grid-template-columns: 1fr; }
+    .card .body { padding: 4px 22px 24px; }
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .gallery, .gallery.three { grid-template-columns: 1fr; }
     .sheet-hero { aspect-ratio: 16 / 9; }
     .group-head { grid-template-columns: auto 1fr; }
     .group-head .meta { display: none; }
+  }
+  /* phones and tablets turned sideways: less height to spend */
+  @media (orientation: landscape) and (max-height: 560px) {
+    .bar .wrap { height: 54px; }
+    .sheet-hero { aspect-ratio: 21 / 6; }
+    .sheet { margin-top: -40px; gap: 22px; }
+    .sheet-head img { width: 56px; height: 56px; }
+    .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .card .body { padding: 4px 20px 22px; }
+    .card .head img { width: 48px; height: 48px; }
   }
   @media (max-width: 480px) { .bar nav { display: none; } .coffee span { display: none; } .coffee { padding: 0 11px; } }
   @media (prefers-reduced-motion: reduce) {
@@ -211,7 +198,6 @@
   <div class="wrap">
     <a class="brand" href="#top"><img src="img/novulon.svg" alt=""><b>NOVULON</b></a>
     <span class="grow"></span>
-    <nav><a href="#work">Work</a></nav>
     <a class="coffee" id="coffee" hidden target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9.5h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10.5h1.3a2.4 2.4 0 0 1 0 4.8H16M9 3.8c-.7.9-.7 1.9 0 2.8M12.4 3.8c-.7.9-.7 1.9 0 2.8"/></svg><span>Buy me a coffee</span></a>
   </div>
 </header>
@@ -219,27 +205,15 @@
 <section class="hero" id="top">
   <canvas id="sky" aria-hidden="true"></canvas>
   <div class="wrap">
-    <span class="label">Apps and tools</span>
-    <h1><span class="solid">NOVULON</span><span class="ghost">builds things.</span></h1>
+    <h1 id="name"><span class="solid">NOVULON</span></h1>
     <div class="intro">
-      <p>Apps I design and build from the ground up. Pick one to see what it does and get it.</p>
+      <p>Apps I design and build from the ground up.</p>
       <a class="scroll-cue" href="#work"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14m0 0-6-6m6 6 6-6"/></svg></i>See the work</a>
     </div>
   </div>
 </section>
 
-<div class="ribbon" aria-hidden="true">
-  <div class="track">
-    <span class="on">Sims Hub</span><b>&#10022;</b><span>Wicked Animator</span><b>&#10022;</b><span class="on">Built from scratch</span><b>&#10022;</b><span>More on the way</span><b>&#10022;</b>
-    <span class="on">Sims Hub</span><b>&#10022;</b><span>Wicked Animator</span><b>&#10022;</b><span class="on">Built from scratch</span><b>&#10022;</b><span>More on the way</span><b>&#10022;</b>
-  </div>
-</div>
-
 <main class="wrap work" id="work">
-  <div class="work-head">
-    <h2>Selected <em>work</em></h2>
-    <p>Each project in its own group. Click a card to open it.</p>
-  </div>
 
   <!-- A project group. Add more groups below this one for other kinds of work. -->
   <section class="group" aria-labelledby="g-sims">
@@ -255,7 +229,7 @@
         <div class="body">
           <div class="head"><img src="img/sims-hub.png" alt=""><h4>Sims Hub</h4></div>
           <p class="pitch">Faster loading, less lag and a clear view of every CC file you have.</p>
-          <div class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span><span class="tag">Updates itself</span></div>
+          <div class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span></div>
           <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>Open the app</span>
         </div>
       </button>
@@ -270,11 +244,6 @@
       </button>
     </div>
   </section>
-
-  <div class="soon">
-    <div><b>More projects are on the way.</b><p>New work shows up here as it's finished.</p></div>
-    <div class="dots" aria-hidden="true"><i></i><i></i><i></i></div>
-  </div>
 </main>
 
 <!-- ============================================================ Sims Hub -->
@@ -287,7 +256,6 @@
       <a class="btn primary" href="https://github.com/xNovulon/SimsHub/releases/latest/download/SimsHub.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Sims Hub</a>
       <span class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span></span>
     </div>
-    <p class="ghnote"><span><b>Want to look at the project?</b> This app is open source. You can see how I made it <a href="https://github.com/xNovulon/SimsHub" target="_blank" rel="noopener">on GitHub</a>.</span></p>
     <span class="sub">What it does</span>
     <div class="feats">
       <div class="feat"><b>Quick Start</b><span>Same sims, same lots, a fraction of the loading time.</span></div>
@@ -317,7 +285,6 @@
       <a class="btn primary" href="https://github.com/xNovulon/SimsHub/releases/latest/download/WickedAnimator.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Wicked Animator</a>
       <span class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span></span>
     </div>
-    <p class="ghnote"><span><b>Want to look at the project?</b> This app is open source. You can see how I made it <a href="https://github.com/xNovulon/SimsHub" target="_blank" rel="noopener">on GitHub</a>.</span></p>
     <span class="sub">How an animation is made</span>
     <ol class="steps">
       <li><b>Scene</b><span>Your sims and where it happens</span></li>
@@ -340,7 +307,6 @@
 
 <footer>
   <div class="wrap">
-    <div class="big" aria-hidden="true">NOVULON</div>
     <div class="fine">
       <span>&copy; Novulon</span>
       <p>The Sims apps are fan-made and not affiliated with or endorsed by Electronic Arts, Maxis or TURBODRIVER. The Sims is a trademark of Electronic Arts Inc. WickedWhims is created by TURBODRIVER.</p>
@@ -355,6 +321,24 @@
   if (/^https:\/\//.test(COFFEE_URL)) { coffee.href = COFFEE_URL; coffee.hidden = false; }
 
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // NOVULON fills the width it has exactly, whatever the screen and however it is turned
+  const name = document.getElementById('name');
+  const fit = () => {
+    const cs = getComputedStyle(name.parentElement);
+    const box = name.parentElement.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+    name.style.fontSize = '100px';
+    const w = name.querySelector('.solid').getBoundingClientRect().width || 1;
+    let size = Math.max(36, Math.min(260, 100 * box / w * .97));
+    name.style.fontSize = size + 'px';
+    // small sizes don't scale quite linearly: shrink until it really fits
+    for (let i = 0; i < 6 && name.querySelector('.solid').getBoundingClientRect().width > box; i++) {
+      size *= .97; name.style.fontSize = size + 'px';
+    }
+  };
+  fit();
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+  new ResizeObserver(fit).observe(name.parentElement);
 
   // app windows
   document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => {
@@ -412,7 +396,7 @@
       g.globalCompositeOperation = 'source-over';
     };
     size(); draw(4000);
-    addEventListener('resize', () => { size(); draw(performance.now()); });
+    new ResizeObserver(() => { size(); draw(performance.now() + 4000); }).observe(cv);
     if (still) return;
     let on = true;
     new IntersectionObserver(([e]) => { on = e.isIntersecting; if (on) requestAnimationFrame(loop); }).observe(cv);

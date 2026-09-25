@@ -160,7 +160,33 @@
   .gallery figure { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #0b0812; }
   .gallery img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
   .gallery.three img { aspect-ratio: 4 / 5; object-position: top center; }
+  .gallery.pair { max-width: 760px; }
+  .gallery.pair img { aspect-ratio: 4 / 5; object-position: top center; }
   .gallery figcaption { padding: 12px 16px; font-size: 13.5px; color: var(--muted); }
+
+
+  /* the 18+ check in front of Wicked Animator */
+  #gate { width: min(520px, calc(100vw - 24px)); }
+  .gate { padding: 34px 32px 30px; display: grid; gap: 18px; text-align: center; justify-items: center; }
+  .gate .badge { width: 74px; height: 74px; border-radius: 22px; display: grid; place-items: center; font: 800 24px/1 var(--display);
+    color: #fff; background: var(--grad); box-shadow: 0 18px 50px -12px rgba(255, 79, 154, .8); }
+  .gate h2 { font-size: clamp(26px, 4vw, 34px); letter-spacing: -.02em; }
+  .gate p { color: #d6cde6; max-width: 40ch; }
+  .gate .actions { justify-content: center; }
+  .gate .btn { cursor: pointer; font-family: inherit; color: var(--text); }
+
+  /* positions */
+  .poses { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+  .poses figure { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #0b0812; position: relative; }
+  .poses img { display: block; width: 100%; aspect-ratio: 16 / 11; object-fit: cover; transition: transform .6s cubic-bezier(.2, .8, .2, 1); }
+  .poses figure:hover img { transform: scale(1.05); }
+  .poses figcaption { position: absolute; left: 12px; bottom: 12px; padding: 7px 12px; border-radius: 999px; font-weight: 800; font-size: 13.5px;
+    background: rgba(10, 7, 16, .72); backdrop-filter: blur(6px); border: 1px solid var(--line-2); }
+  .editor { margin: 0; border-radius: 18px; overflow: hidden; border: 1px solid var(--line); background: #0b0812; }
+  .editor img { display: block; width: 100%; }
+  .editor figcaption { padding: 12px 16px; font-size: 13.5px; color: var(--muted); }
+  @media (max-width: 860px) { .poses { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 480px) { .poses { grid-template-columns: 1fr; } }
 
   /* ---------------------------------------------------------------- footer */
   footer { margin-top: 20px; border-top: 1px solid var(--line); padding-block: 34px 40px; }
@@ -234,7 +260,7 @@
           <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>Open the app</span>
         </div>
       </button>
-      <button class="card violet" data-open="dlg-anim" aria-haspopup="dialog">
+      <button class="card violet" data-open="dlg-anim" data-adult aria-haspopup="dialog">
         <div class="shot"><img src="img/animator-face.png" alt="Wicked Animator: posing a sim's face"></div>
         <div class="body">
           <div class="head"><img src="img/wicked-animator.png" alt=""><h4>Wicked Animator</h4></div>
@@ -286,7 +312,7 @@
       <a class="btn primary" href="https://github.com/xNovulon/SimsHub/releases/latest/download/WickedAnimator.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Wicked Animator</a>
       <span class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span></span>
     </div>
-    <span class="sub">How an animation is made</span>
+    <span class="sub">How it works</span>
     <ol class="steps">
       <li><b>Scene</b><span>Your sims and where it happens</span></li>
       <li><b>Pose</b><span>Ready poses or drag hands and feet</span></li>
@@ -297,11 +323,34 @@
       <li><b>Details</b><span>Name, creator, where it plays</span></li>
       <li><b>Share</b><span>Send to game or package a mod</span></li>
     </ol>
-    <span class="sub">Inside the app</span>
-    <div class="gallery three">
+    <figure class="editor"><img src="img/wa-motion.jpg" alt="The editor: the sims on the stage, their motions on the left and the timeline below" loading="lazy">
+      <figcaption>Pose the sims, add motion, and the timeline plays it as a loop.</figcaption></figure>
+    <span class="sub">Positions</span>
+    <div class="poses">
+      <figure><img src="img/pos-kiss.jpg" alt="Kissing" loading="lazy"><figcaption>Kissing</figcaption></figure>
+      <figure><img src="img/pos-missionary.jpg" alt="Missionary" loading="lazy"><figcaption>Missionary</figcaption></figure>
+      <figure><img src="img/pos-cowgirl.jpg" alt="Cowgirl" loading="lazy"><figcaption>Cowgirl</figcaption></figure>
+      <figure><img src="img/pos-doggy.jpg" alt="Doggy" loading="lazy"><figcaption>Doggy</figcaption></figure>
+      <figure><img src="img/pos-spooning.jpg" alt="Spooning" loading="lazy"><figcaption>Spooning</figcaption></figure>
+      <figure><img src="img/pos-carry.jpg" alt="Carry" loading="lazy"><figcaption>Carry</figcaption></figure>
+    </div>
+    <span class="sub">Your own sims</span>
+    <div class="gallery pair">
       <figure><img src="img/animator-tray-look.png" alt="A Tray sim in her own outfit" loading="lazy"><figcaption>Tray sims arrive in their own outfit</figcaption></figure>
       <figure><img src="img/animator-clothes.png" alt="The clothes list" loading="lazy"><figcaption>Every piece they wear, one switch each</figcaption></figure>
-      <figure><img src="img/animator-face.png" alt="Posing a face" loading="lazy"><figcaption>Faces you can pose bone by bone</figcaption></figure>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============================================================ 18+ check -->
+<dialog id="gate" aria-labelledby="t-gate">
+  <div class="gate">
+    <span class="badge" aria-hidden="true">18+</span>
+    <h2 id="t-gate">Adults only</h2>
+    <p>Wicked Animator makes adult animations for the WickedWhims mod. The next page shows sims in intimate positions. Continue only if you're 18 or older.</p>
+    <div class="actions">
+      <button class="btn primary" type="button" data-gate-yes>I'm 18 or older</button>
+      <button class="btn" type="button" data-gate-no>Go back</button>
     </div>
   </div>
 </dialog>
@@ -342,11 +391,24 @@
   new ResizeObserver(fit).observe(name.parentElement);
 
   // app windows
+
+  // Wicked Animator asks for 18+ first (once per visit)
+  const gate = document.getElementById('gate');
+  let gateFor = null;
+  const passed = () => { try { return sessionStorage.getItem('novulon.18') === 'yes'; } catch { return false; } };
+  gate.querySelector('[data-gate-yes]').addEventListener('click', () => {
+    try { sessionStorage.setItem('novulon.18', 'yes'); } catch { /* private window: asks again next time */ }
+    gate.close();
+    if (gateFor) { const d = document.getElementById(gateFor); d.showModal(); d.scrollTop = 0; }
+  });
+  gate.querySelector('[data-gate-no]').addEventListener('click', () => gate.close());
+  gate.addEventListener('click', e => { if (e.target === gate) gate.close(); });
   document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => {
+    if (b.hasAttribute('data-adult') && !passed()) { gateFor = b.dataset.open; gate.showModal(); return; }
     const d = document.getElementById(b.dataset.open);
     d.showModal(); d.scrollTop = 0;
   }));
-  document.querySelectorAll('dialog').forEach(d => {
+  document.querySelectorAll('dialog:not(#gate)').forEach(d => {
     d.querySelector('[data-close]').addEventListener('click', () => d.close());
     d.addEventListener('click', e => { if (e.target === d) d.close(); });
   });

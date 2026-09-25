@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novulon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+  /* One look on purpose: the same night-purple the apps themselves use. */
+  :root {
+    color-scheme: dark;
+    --ground: #0c0a12;
+    --panel: #15111e;
+    --panel-2: #1c1728;
+    --line: #2c2440;
+    --text: #f3eefb;
+    --muted: #a79dbb;
+    --pink: #ff4f9a;
+    --violet: #a855f7;
+    --mint: #4ade9e;
+    --display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+    --body: "Plus Jakarta Sans", "Segoe UI", system-ui, sans-serif;
+    --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--text); font: 16px/1.6 var(--body); padding-inline: 20px; }
+  body::before { content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -1;
+    background: radial-gradient(900px 500px at 85% -10%, rgba(255, 79, 154, .16), transparent 60%),
+                radial-gradient(700px 500px at -10% 30%, rgba(168, 85, 247, .12), transparent 60%); }
+  a { color: inherit; }
+  .wrap { max-width: 1120px; margin-inline: auto; }
+  h1, h2, h3 { font-family: var(--display); line-height: 1.05; margin: 0; text-wrap: balance; }
+  p { margin: 0; }
+  :focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; border-radius: 6px; }
+
+  /* top */
+  .top { display: flex; align-items: center; gap: 12px; padding-block: 22px; }
+  .top img { width: 36px; height: 36px; }
+  .top b { font-family: var(--display); font-size: 20px; letter-spacing: -.3px; }
+  .top nav { margin-left: auto; display: flex; gap: 20px; flex-wrap: wrap; }
+  .top nav a { text-decoration: none; color: var(--muted); font-weight: 600; font-size: 14px; }
+  .top nav a:hover { color: var(--text); }
+
+  /* hero */
+  .hero { padding-block: 56px 40px; display: grid; gap: 22px; }
+  .eyebrow { font: 500 12px/1 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--pink); }
+  .hero h1 { font-size: clamp(42px, 7.4vw, 92px); font-weight: 800; letter-spacing: -2.5px; max-width: 13ch; }
+  .hero h1 em { font-style: normal; background: linear-gradient(100deg, var(--pink), var(--violet)); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .hero p { font-size: clamp(17px, 2vw, 20px); color: var(--muted); max-width: 58ch; }
+  .path { font: 500 13px/1.4 var(--mono); color: var(--muted); background: var(--panel); border: 1px solid var(--line);
+    border-radius: 10px; padding: 10px 14px; width: fit-content; max-width: 100%; overflow-x: auto; white-space: nowrap; }
+  .path span { color: var(--mint); }
+
+  /* the two apps */
+  .apps { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; padding-block: 12px 64px; }
+  .app { background: var(--panel); border: 1px solid var(--line); border-radius: 22px; overflow: hidden; display: flex; flex-direction: column; }
+  .app .shot { aspect-ratio: 16 / 10; overflow: hidden; background: var(--panel-2); border-bottom: 1px solid var(--line); }
+  .app .shot img { width: 100%; height: 100%; object-fit: cover; object-position: top left; display: block; transition: transform .6s ease; }
+  .app:hover .shot img { transform: scale(1.03); }
+  .app .body { padding: 24px; display: grid; gap: 14px; flex: 1; align-content: start; }
+  .app .head { display: flex; align-items: center; gap: 12px; }
+  .app .head img { width: 44px; height: 44px; border-radius: 12px; }
+  .app h2 { font-size: 30px; letter-spacing: -.8px; }
+  .tags { display: flex; gap: 8px; flex-wrap: wrap; }
+  .tag { font: 500 12px/1 var(--mono); padding: 6px 9px; border-radius: 999px; border: 1px solid var(--line); color: var(--muted); }
+  .tag.free { color: var(--mint); border-color: rgba(74, 222, 158, .35); }
+  .tag.adult { color: #ffb4cf; border-color: rgba(255, 79, 154, .4); }
+  .app p { color: var(--muted); }
+  .actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 4px; }
+  .btn { display: inline-flex; align-items: center; gap: 8px; height: 42px; padding: 0 18px; border-radius: 12px; font-weight: 700; font-size: 14px;
+    text-decoration: none; border: 1px solid var(--line); background: var(--panel-2); transition: transform .15s, border-color .15s; }
+  .btn:hover { transform: translateY(-1px); border-color: #4a3d66; }
+  .btn.primary { background: linear-gradient(100deg, var(--pink), var(--violet)); border-color: transparent; color: #fff; }
+  .btn svg { width: 16px; height: 16px; }
+
+  /* app detail sections */
+  section.detail { padding-block: 56px; border-top: 1px solid var(--line); display: grid; gap: 28px; }
+  .detail header { display: grid; gap: 12px; max-width: 70ch; }
+  .detail h2 { font-size: clamp(32px, 4.6vw, 52px); letter-spacing: -1.4px; }
+  .detail header p { color: var(--muted); font-size: 17px; }
+  .feats { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px 28px; }
+  .feat { display: grid; gap: 4px; padding-block: 14px; border-top: 1px solid var(--line); }
+  .feat b { font-family: var(--display); font-size: 19px; font-weight: 700; }
+  .feat span { color: var(--muted); font-size: 15px; }
+  .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+  .gallery figure { margin: 0; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; }
+  .gallery img { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top left; }
+  .gallery figcaption { padding: 10px 14px; font-size: 13px; color: var(--muted); }
+  .gallery.tall img { aspect-ratio: 4 / 5; object-position: top center; }
+
+  /* steps (the animator really is eight steps, in order) */
+  .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; counter-reset: s; list-style: none; padding: 0; margin: 0; }
+  .steps li { counter-increment: s; background: var(--panel); border: 1px solid var(--line); border-radius: 14px; padding: 14px; display: grid; gap: 4px; }
+  .steps li::before { content: counter(s); font: 500 12px/1 var(--mono); color: var(--pink); }
+  .steps b { font-family: var(--display); font-size: 17px; }
+  .steps span { font-size: 13.5px; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); padding-block: 36px 48px; display: grid; gap: 10px; color: var(--muted); font-size: 13px; }
+  footer .links { display: flex; gap: 18px; flex-wrap: wrap; }
+  footer a { color: var(--text); font-weight: 600; text-decoration: none; }
+
+
+  /* clickable app cards and their windows */
+  button.app { font: inherit; color: inherit; text-align: left; cursor: pointer; padding: 0; transition: border-color .2s, transform .2s; }
+  button.app:hover { border-color: #4a3d66; transform: translateY(-2px); }
+  .more { font: 500 12px/1 var(--mono); color: var(--pink); letter-spacing: .08em; text-transform: uppercase; }
+  dialog { width: min(980px, calc(100vw - 32px)); max-height: calc(100vh - 48px); padding: 0; border: 1px solid var(--line); border-radius: 22px;
+    background: var(--ground); color: var(--text); overflow: auto; }
+  dialog::backdrop { background: rgba(6, 4, 10, .72); backdrop-filter: blur(4px); }
+  dialog .inner { padding: 28px; display: grid; gap: 24px; }
+  dialog .dhead { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+  dialog .dhead img { width: 52px; height: 52px; border-radius: 14px; }
+  dialog .dhead h2 { font-size: clamp(28px, 4vw, 40px); letter-spacing: -1px; }
+  dialog .close { margin-left: auto; width: 40px; height: 40px; border-radius: 12px; border: 1px solid var(--line); background: var(--panel); color: var(--text); font-size: 22px; cursor: pointer; }
+  dialog .lead { color: var(--muted); font-size: 17px; max-width: 70ch; }
+  .coffee { color: #ffe2b8; background: rgba(251, 191, 36, .1); border-color: rgba(251, 191, 36, .4); }
+  .coffee:hover { border-color: rgba(251, 191, 36, .7); }
+  .gh { background: var(--panel); border: 1px solid var(--line); border-radius: 18px; padding: 20px 22px; margin-bottom: 56px;
+    display: flex; gap: 16px; align-items: center; flex-wrap: wrap; justify-content: space-between; }
+  .gh p { color: var(--muted); max-width: 60ch; }
+  .gh b { color: var(--text); }
+  .top nav { align-items: center; }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <header class="top">
+    <img src="img/novulon.svg" alt="">
+    <b>Novulon</b>
+    <nav>
+      <a href="https://github.com/xNovulon/SimsHub">GitHub</a>
+    </nav>
+    <a class="btn coffee" id="coffee" hidden target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9.5h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10.5h1.3a2.4 2.4 0 0 1 0 4.8H16M9 3.8c-.7.9-.7 1.9 0 2.8M12.4 3.8c-.7.9-.7 1.9 0 2.8"/></svg>Buy me a coffee</a>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">Tools for The Sims 4 on PC</span>
+    <h1>Less waiting. <em>More playing.</em></h1>
+    <p>Free Windows apps for people who play The Sims 4 with a lot of mods. One gets the game loading faster and keeps your CC tidy. The other lets you make WickedWhims animations without Blender.</p>
+    <div class="path">Documents\Electronic Arts\The Sims 4\<span>Mods</span></div>
+  </section>
+
+  <div class="apps">
+    <button class="app" data-open="dlg-hub" aria-haspopup="dialog">
+      <div class="shot"><img src="img/hub-home.png" alt="Sims Hub home screen with Quick Start and Full Start"></div>
+      <div class="body">
+        <div class="head"><img src="img/sims-hub.png" alt=""><h2>Sims Hub</h2></div>
+        <div class="tags"><span class="tag free">Free</span><span class="tag">Windows 10 / 11</span><span class="tag">Updates itself</span></div>
+        <p>Faster loading, less lag and a clear view of every CC file you have.</p>
+        <span class="more">See what it does</span>
+      </div>
+    </button>
+    <button class="app" data-open="dlg-anim" aria-haspopup="dialog">
+      <div class="shot"><img src="img/animator-face.png" alt="Wicked Animator posing a sim's face"></div>
+      <div class="body">
+        <div class="head"><img src="img/wicked-animator.png" alt=""><h2>Wicked Animator</h2></div>
+        <div class="tags"><span class="tag free">Free</span><span class="tag adult">18+</span><span class="tag">Needs WickedWhims</span></div>
+        <p>Make your own WickedWhims animations, then send them straight into your game.</p>
+        <span class="more">See what it does</span>
+      </div>
+    </button>
+  </div>
+
+  <div class="gh">
+    <p><b>Want to look at the project?</b> Both apps are open source. You can see how they're made on GitHub.</p>
+    <a class="btn" href="https://github.com/xNovulon/SimsHub"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.7c-2.8.6-3.4-1.3-3.4-1.3-.5-1.1-1.1-1.4-1.1-1.4-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.5 2.4 1.1 2.9.8.1-.7.4-1.1.6-1.3-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.7 0 0 .8-.3 2.8 1a9.6 9.6 0 0 1 5 0c1.9-1.3 2.8-1 2.8-1 .5 1.4.2 2.4.1 2.7.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg>View on GitHub</a>
+  </div>
+
+  <dialog id="dlg-hub" aria-labelledby="t-hub">
+    <div class="inner">
+      <div class="dhead"><img src="img/sims-hub.png" alt=""><h2 id="t-hub">Sims Hub</h2>
+        <button class="close" data-close aria-label="Close">&times;</button></div>
+      <p class="lead">The Sims 4 reads every CC file at start-up, even the ones nobody wears. Quick Start works out what your saves really use and starts the game with just that. Full Start brings everything back when you want to build or browse Create a Sim.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/xNovulon/SimsHub/releases/latest/download/SimsHub.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Sims Hub</a>
+        <a class="btn" href="https://github.com/xNovulon/SimsHub">View on GitHub</a>
+      </div>
+      <div class="feats">
+        <div class="feat"><b>Quick Start</b><span>Same sims, same lots, a fraction of the loading time.</span></div>
+        <div class="feat"><b>CC browser</b><span>Every file with its picture, sorted into hair, tops, furniture, animations and more.</span></div>
+        <div class="feat"><b>Duplicates and merges</b><span>Finds copies hidden inside merged files, and splits merges back apart.</span></div>
+        <div class="feat"><b>Missing CC</b><span>Shows what a save is missing and finds it in your Downloads, even inside .zip files.</span></div>
+        <div class="feat"><b>Less lag</b><span>Turns down only the graphics settings that cost the most.</span></div>
+        <div class="feat"><b>Safe by design</b><span>Nothing is deleted, and Undo last change puts things back.</span></div>
+      </div>
+      <div class="gallery">
+        <figure><img src="img/hub-library.png" alt="The CC library" loading="lazy"><figcaption>The CC library, with pictures</figcaption></figure>
+        <figure><img src="img/hub-saves.png" alt="Your saves" loading="lazy"><figcaption>Play one save with only its CC</figcaption></figure>
+        <figure><img src="img/hub-performance.png" alt="Graphics and start times" loading="lazy"><figcaption>Graphics and start times</figcaption></figure>
+        <figure><img src="img/hub-tools.png" alt="Tools and change history" loading="lazy"><figcaption>Tools, with every change undoable</figcaption></figure>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog id="dlg-anim" aria-labelledby="t-anim">
+    <div class="inner">
+      <div class="dhead"><img src="img/wicked-animator.png" alt=""><h2 id="t-anim">Wicked Animator</h2><span class="tag adult">18+</span>
+        <button class="close" data-close aria-label="Close">&times;</button></div>
+      <p class="lead">Load your own sims from the Tray with their looks and outfits, pose them, add movement, faces and sound, and send the result to your Mods folder. It needs the WickedWhims mod, and only adult sims can be used.</p>
+      <div class="actions">
+        <a class="btn primary" href="https://github.com/xNovulon/SimsHub/releases/latest/download/WickedAnimator.exe"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Wicked Animator</a>
+        <a class="btn" href="https://github.com/xNovulon/SimsHub">View on GitHub</a>
+      </div>
+      <ol class="steps">
+        <li><b>Scene</b><span>Your sims and where it happens</span></li>
+        <li><b>Pose</b><span>Ready poses or drag hands and feet</span></li>
+        <li><b>Motion</b><span>One-click movement or your own keys</span></li>
+        <li><b>Body</b><span>Physics, hair and clothes</span></li>
+        <li><b>Face</b><span>Expressions, blinking, lip-sync</span></li>
+        <li><b>Sounds</b><span>Game sounds or your own</span></li>
+        <li><b>Details</b><span>Name, creator, where it plays</span></li>
+        <li><b>Share</b><span>Send to game or package a mod</span></li>
+      </ol>
+      <div class="gallery tall">
+        <figure><img src="img/animator-tray-look.png" alt="A Tray sim in her own outfit" loading="lazy"><figcaption>Tray sims arrive in their own outfit</figcaption></figure>
+        <figure><img src="img/animator-clothes.png" alt="The clothes list" loading="lazy"><figcaption>Every piece they wear, one switch each</figcaption></figure>
+        <figure><img src="img/animator-face.png" alt="Posing a face" loading="lazy"><figcaption>Faces you can pose bone by bone</figcaption></figure>
+      </div>
+    </div>
+  </dialog>
+
+  <footer>
+    <div class="links">
+      <a href="https://github.com/xNovulon/SimsHub">View the project on GitHub</a>
+      <a href="https://github.com/xNovulon/SimsHub/issues/new">Report a problem</a>
+    </div>
+    <p>Fan-made apps, not affiliated with or endorsed by Electronic Arts, Maxis or TURBODRIVER. The Sims is a trademark of Electronic Arts Inc. WickedWhims is created by TURBODRIVER.</p>
+  </footer>
+</div>
+
+<script>
+  // Your Buy Me a Coffee page. The button shows once this is set, e.g. 'https://buymeacoffee.com/yourname'
+  const COFFEE_URL = '';
+  const coffee = document.getElementById('coffee');
+  if (/^https:\/\//.test(COFFEE_URL)) { coffee.href = COFFEE_URL; coffee.hidden = false; }
+
+  document.querySelectorAll('[data-open]').forEach(b => b.addEventListener('click', () => document.getElementById(b.dataset.open).showModal()));
+  document.querySelectorAll('dialog').forEach(d => {
+    d.querySelector('[data-close]').addEventListener('click', () => d.close());
+    d.addEventListener('click', e => { if (e.target === d) d.close(); });
+  });
+</script>
+</body>
+</html>

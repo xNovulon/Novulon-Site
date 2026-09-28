@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Apps and tools by Novulon, including Sims Hub and Wicked Animator for The Sims 4.">
+<meta name="description" content="Apps, tools and mods by Novulon: Sims Hub and Wicked Animator for The Sims 4, and StatCheats, AI Remade and Lag Remover for inZOI.">
 <link rel="icon" href="img/novulon-logo.svg" type="image/svg+xml">
 <title>Novulon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -84,6 +84,19 @@
 
   /* ---------------------------------------------------------------- work */
   .work { padding-block: clamp(70px, 10vw, 130px) 40px; }
+
+  /* one tab per game */
+  .games { display: flex; gap: 6px; width: max-content; max-width: 100%; margin: 0 auto 56px; padding: 6px; border-radius: 999px;
+    background: rgba(255, 255, 255, .04); border: 1px solid var(--line-2); overflow-x: auto; }
+  .games button { display: inline-flex; align-items: center; gap: 9px; height: 46px; padding: 0 22px; border: 0; border-radius: 999px; cursor: pointer;
+    font: 800 15px/1 var(--body); color: var(--muted); background: transparent; white-space: nowrap; transition: color .2s, background .2s; }
+  .games button:hover { color: var(--text); }
+  .games button[aria-selected="true"] { color: #fff; background: var(--grad); box-shadow: 0 12px 34px -12px rgba(255, 79, 154, .8); }
+  .games .count { font: 600 11px/1 var(--mono); padding: 4px 7px; border-radius: 999px; background: rgba(255, 255, 255, .12); }
+  .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .note { padding: 16px 18px; border-radius: 16px; background: rgba(255, 79, 154, .07); border: 1px solid rgba(255, 79, 154, .3); color: #e9dff6; font-size: 14.5px; }
+  .note b { color: #fff; }
+  code.path { font: 500 13px/1.4 var(--mono); padding: 2px 7px; border-radius: 7px; background: rgba(255, 255, 255, .07); border: 1px solid var(--line); word-break: break-all; }
 
   /* a group of projects (add more groups like this one) */
   .group { display: grid; gap: 26px; margin-bottom: 90px; }
@@ -197,8 +210,9 @@
   footer .fine { display: flex; justify-content: space-between; gap: 20px; flex-wrap: wrap; color: var(--faint); font-size: 13px; }
   footer .fine p { max-width: 70ch; }
 
+  @media (max-width: 1100px) { .cards.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 860px) {
-    .cards { grid-template-columns: 1fr; }
+    .cards, .cards.three { grid-template-columns: 1fr; }
     .card .body { padding: 4px 22px 24px; }
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .gallery, .gallery.three { grid-template-columns: 1fr; }
@@ -244,8 +258,14 @@
 
 <main class="wrap work" id="work">
 
+  <!-- One tab per game; each tab shows its own group below. -->
+  <div class="games" role="tablist" aria-label="Games">
+    <button role="tab" id="tab-sims" aria-controls="grp-sims" aria-selected="true" data-game="sims">The Sims 4<span class="count">2</span></button>
+    <button role="tab" id="tab-inzoi" aria-controls="grp-inzoi" aria-selected="false" data-game="inzoi">inZOI<span class="count">3</span></button>
+  </div>
+
   <!-- A project group. Add more groups below this one for other kinds of work. -->
-  <section class="group" aria-labelledby="g-sims">
+  <section class="group" id="grp-sims" role="tabpanel" aria-labelledby="g-sims" data-game="sims">
     <div class="group-head">
       <span class="n">01</span>
       <h3 id="g-sims">The Sims 4</h3>
@@ -269,6 +289,44 @@
           <p class="pitch">Make your own WickedWhims animations, then send them straight into your game.</p>
           <div class="tags"><span class="tag free">Free</span><span class="tag adult">18+</span><span class="tag">Needs WickedWhims</span></div>
           <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>Open the app</span>
+        </div>
+      </button>
+    </div>
+  </section>
+
+  <section class="group" id="grp-inzoi" role="tabpanel" aria-labelledby="g-inzoi" data-game="inzoi" hidden>
+    <div class="group-head">
+      <span class="n">02</span>
+      <h3 id="g-inzoi">inZOI</h3>
+      <span class="meta">In-game mods &middot; 3 projects</span>
+      <span class="rule"></span>
+    </div>
+    <div class="cards three">
+      <button class="card" data-open="dlg-sc" aria-haspopup="dialog">
+        <div class="shot"><img src="img/inzoi-sc-card.jpg" alt="StatCheats open in inZOI, on the money page"></div>
+        <div class="body">
+          <div class="head"><img src="img/inzoi-statcheats.svg" alt=""><h4>StatCheats</h4></div>
+          <p class="pitch">Money, needs, skills, relationships and mood, for anyone, from one button in the game.</p>
+          <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
+          <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
+        </div>
+      </button>
+      <button class="card violet" data-open="dlg-ai" aria-haspopup="dialog">
+        <div class="shot"><img src="img/inzoi-ai-card.jpg" alt="AI Remade's settings in inZOI"></div>
+        <div class="body">
+          <div class="head"><img src="img/inzoi-airemade.svg" alt=""><h4>AI Remade</h4></div>
+          <p class="pitch">Your zoi asks before wandering off, talks end when you walk away, and an attraction level you set.</p>
+          <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
+          <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
+        </div>
+      </button>
+      <button class="card" data-open="dlg-lag" aria-haspopup="dialog">
+        <div class="shot"><img src="img/inzoi-lag-card.jpg" alt="Lag Remover's details in inZOI"></div>
+        <div class="body">
+          <div class="head"><img src="img/inzoi-lagremover.svg" alt=""><h4>Lag Remover</h4></div>
+          <p class="pitch">Smoother frames and fewer stutters, with your graphics left exactly as they are.</p>
+          <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
+          <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
         </div>
       </button>
     </div>
@@ -360,6 +418,110 @@
   </div>
 </dialog>
 
+<!-- ============================================================ inZOI: StatCheats -->
+<dialog id="dlg-sc" aria-labelledby="t-sc">
+  <div class="sheet-hero"><img src="img/inzoi-sc-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
+  <div class="sheet">
+    <div class="sheet-head"><img src="img/inzoi-statcheats.svg" alt=""><h2 id="t-sc">StatCheats</h2></div>
+    <p class="lead">Change money, needs, skills, relationships and mood for your zoi or anyone nearby. It lives inside the game: an N button next to the icon row in the bottom right.</p>
+    <div class="actions">
+      <a class="btn primary" href="downloads/inzoi/Novulon-StatCheats.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download StatCheats</a>
+      <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
+    </div>
+    <span class="sub">Install</span>
+    <ol class="steps">
+      <li><b>Download</b><span>The .zip above</span></li>
+      <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code></span></li>
+      <li><b>Start inZOI</b><span>Load a save as usual</span></li>
+      <li><b>Press N</b><span>Bottom right, next to the icon row</span></li>
+    </ol>
+    <span class="sub">What it does</span>
+    <div class="feats">
+      <div class="feat"><b>Money</b><span>Set or add any amount. Right-click the money on the HUD for a quick menu.</span></div>
+      <div class="feat"><b>Needs</b><span>Every need and stat as a bar you drag. Max one, fill them all, or freeze them.</span></div>
+      <div class="feat"><b>Skills</b><span>Every skill, any level, one click each. Or max them all.</span></div>
+      <div class="feat"><b>Relationships</b><span>Love, friendship, business and family with anyone they know. Love only between adults.</span></div>
+      <div class="feat"><b>Mood</b><span>Any good or bad mood, at any level.</span></div>
+      <div class="feat"><b>Anyone</b><span>Your household or anyone nearby, with search.</span></div>
+    </div>
+    <span class="sub">Inside the game</span>
+    <div class="gallery pair">
+      <figure><img src="img/inzoi-sc-money.jpg" alt="Money page" loading="lazy"><figcaption>Set or add money</figcaption></figure>
+      <figure><img src="img/inzoi-sc-needs.jpg" alt="Needs page" loading="lazy"><figcaption>Needs you drag</figcaption></figure>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============================================================ inZOI: AI Remade -->
+<dialog id="dlg-ai" aria-labelledby="t-ai">
+  <div class="sheet-hero"><img src="img/inzoi-ai-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
+  <div class="sheet">
+    <div class="sheet-head"><img src="img/inzoi-airemade.svg" alt=""><h2 id="t-ai">AI Remade</h2></div>
+    <p class="lead">Your zoi asks before acting alone, conversations end when you walk away, an over-the-shoulder camera, and an attraction system for adults. Every part has its own switch.</p>
+    <div class="actions">
+      <a class="btn primary" href="downloads/inzoi/Novulon-AI-Remade.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download AI Remade</a>
+      <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
+    </div>
+    <span class="sub">Install</span>
+    <ol class="steps">
+      <li><b>Download</b><span>The .zip above</span></li>
+      <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code></span></li>
+      <li><b>Start inZOI</b><span>Load a save as usual</span></li>
+      <li><b>Open it</b><span>The button left of the icon row, bottom right</span></li>
+    </ol>
+    <span class="sub">What it does</span>
+    <div class="feats">
+      <div class="feat"><b>Asks first</b><span>"Jeff is hungry. Send him to eat?" pops up at the top instead of your zoi walking off alone.</span></div>
+      <div class="feat"><b>Stays in the conversation</b><span>Self-started trips wait until you say yes, so no more leaving mid-talk.</span></div>
+      <div class="feat"><b>Walk away, talk ends</b><span>Step 4, 6 or 10 m away from someone and the conversation ends.</span></div>
+      <div class="feat"><b>Shoulder camera</b><span>Shoulder View sits over the right shoulder, like an action game.</span></div>
+      <div class="feat"><b>Attraction level</b><span>From -10 (seen as ugly) to +10 (perfect). Adults notice you, walk over, flirt and say yes more often.</span></div>
+      <div class="feat"><b>Make them into you</b><span>Change who adults are attracted to so they can fall for you, with one-click Undo. Adults only.</span></div>
+    </div>
+    <span class="sub">Inside the game</span>
+    <figure class="editor narrow"><img src="img/inzoi-ai-popup.jpg" alt="A popup under the game's toolbar: Jeff is hungry. Send him to eat? Yes or Not now" loading="lazy">
+      <figcaption>Your zoi asks first. Every part has its own switch.</figcaption></figure>
+    <div class="gallery pair">
+      <figure><img src="img/inzoi-ai-1.jpg" alt="AI Remade, Behavior tab" loading="lazy"><figcaption>Behavior</figcaption></figure>
+      <figure><img src="img/inzoi-ai-2.jpg" alt="AI Remade, Attraction tab" loading="lazy"><figcaption>Attraction</figcaption></figure>
+    </div>
+  </div>
+</dialog>
+
+<!-- ============================================================ inZOI: Lag Remover -->
+<dialog id="dlg-lag" aria-labelledby="t-lag">
+  <div class="sheet-hero"><img src="img/inzoi-lag-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
+  <div class="sheet">
+    <div class="sheet-head"><img src="img/inzoi-lagremover.svg" alt=""><h2 id="t-lag">Lag Remover</h2></div>
+    <p class="lead">Smoother FPS in inZOI: even frame pacing, a bigger texture pool and shaders ready before they show up. Your graphics stay exactly as they are.</p>
+    <div class="actions">
+      <a class="btn primary" href="downloads/inzoi/Novulon-Lag-Remover.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Lag Remover</a>
+      <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
+    </div>
+    <span class="sub">Install</span>
+    <ol class="steps">
+      <li><b>Download</b><span>The .zip above</span></li>
+      <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code></span></li>
+      <li><b>Load a save</b><span>Open Details on the note and pick your screen's Hz once</span></li>
+      <li><b>Optional</b><span>With inZOI closed, run Apply Lag Remover.cmd for the start-up fixes</span></li>
+    </ol>
+    <span class="sub">What it does</span>
+    <div class="feats">
+      <div class="feat"><b>Even frame pacing</b><span>Caps FPS at a number your screen's refresh rate divides evenly, so frames stop jittering.</span></div>
+      <div class="feat"><b>Bigger texture pool</b><span>At least 2,000 MB, so textures stop reloading while you walk and drive.</span></div>
+      <div class="feat"><b>Shaders ready early</b><span>Prepared while loading instead of mid-game, so fewer one-off hitches.</span></div>
+      <div class="feat"><b>Lighter sky updates</b><span>The game's own option. The sky looks the same.</span></div>
+      <div class="feat"><b>Same graphics</b><span>Nothing is turned down, and every fix has its own switch.</span></div>
+      <div class="feat"><b>Easy to undo</b><span>Turning a fix off puts your old value back. Undo Lag Remover.cmd reverses the start-up part.</span></div>
+    </div>
+    <span class="sub">Inside the game</span>
+    <div class="gallery">
+      <figure><img src="img/inzoi-lag-1.jpg" alt="Lag Remover's note above the needs panel" loading="lazy"><figcaption>A short note when a save loads</figcaption></figure>
+      <figure><img src="img/inzoi-lag-2.jpg" alt="Lag Remover's Details window" loading="lazy"><figcaption>Every fix, with its own switch</figcaption></figure>
+    </div>
+  </div>
+</dialog>
+
 <!-- ============================================================ 18+ check -->
 <dialog id="gate" aria-labelledby="t-gate">
   <div class="gate">
@@ -377,7 +539,7 @@
   <div class="wrap">
     <div class="fine">
       <span>&copy; Novulon</span>
-      <p>The Sims apps are fan-made and not affiliated with or endorsed by Electronic Arts, Maxis or TURBODRIVER. The Sims is a trademark of Electronic Arts Inc. WickedWhims is created by TURBODRIVER.</p>
+      <p>The Sims apps are fan-made and not affiliated with or endorsed by Electronic Arts, Maxis or TURBODRIVER. The Sims is a trademark of Electronic Arts Inc. WickedWhims is created by TURBODRIVER. The inZOI mods are fan-made and not affiliated with or endorsed by KRAFTON. inZOI is a trademark of KRAFTON, Inc.</p>
     </div>
   </div>
 </footer>
@@ -407,6 +569,30 @@
   fit();
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
   new ResizeObserver(fit).observe(name.parentElement);
+
+  // one tab per game; the address remembers it (novulon.pages.dev/#inzoi)
+  const tabs = [...document.querySelectorAll('.games [role="tab"]')];
+  const pickGame = (game, focus) => {
+    tabs.forEach(t => {
+      const on = t.dataset.game === game;
+      t.setAttribute('aria-selected', on);
+      t.tabIndex = on ? 0 : -1;
+      if (on && focus) t.focus();
+    });
+    document.querySelectorAll('.group[data-game]').forEach(g => { g.hidden = g.dataset.game !== game; });
+  };
+  tabs.forEach((t, i) => {
+    t.addEventListener('click', () => { pickGame(t.dataset.game); history.replaceState(null, '', '#' + t.dataset.game); });
+    t.addEventListener('keydown', e => {
+      if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
+      const next = tabs[(i + (e.key === 'ArrowRight' ? 1 : tabs.length - 1)) % tabs.length];
+      pickGame(next.dataset.game, true);
+      history.replaceState(null, '', '#' + next.dataset.game);
+    });
+  });
+  const fromHash = () => { const g = location.hash.slice(1); if (tabs.some(t => t.dataset.game === g)) pickGame(g); };
+  fromHash();
+  addEventListener('hashchange', fromHash);
 
   // app windows
 

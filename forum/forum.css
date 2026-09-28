@@ -286,6 +286,17 @@ button.link { border: 0; background: none; padding: 0; font: inherit; cursor: po
 .site-foot a { color: var(--muted); text-decoration: none; }
 .site-foot a:hover { color: var(--text); }
 
+/* settings */
+.stack { display: grid; gap: 14px; }
+.row { display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.email-now { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; font-size: 14.5px; overflow-wrap: anywhere; }
+.ok-tag, .wait-tag { font: 700 10.5px/1 var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 5px 8px; border-radius: 999px; }
+.ok-tag { color: #b6f5d6; background: rgba(74, 222, 158, .12); }
+.wait-tag { color: #fde68a; background: rgba(251, 191, 36, .12); }
+.optional { font-weight: 500; color: var(--faint); }
+/* a field only bots fill in */
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
 /* ---------------------------------------------------------------- narrow screens */
 @media (max-width: 860px) {
   .list-head { display: none; }

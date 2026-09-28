@@ -5,6 +5,7 @@
   const GAMES = { sims: 'The Sims 4', inzoi: 'inZOI' };
   const $ = (sel, root) => (root || document).querySelector(sel);
   const qs = new URLSearchParams(location.search);
+  const isGame = (g) => typeof g === 'string' && Object.prototype.hasOwnProperty.call(GAMES, g);
 
   // ---- tiny DOM helpers ----------------------------------------------------------------------------------
   function h(tag, attrs, ...kids) {
@@ -182,7 +183,7 @@
       if (!/^\/account\/(login|register)/.test(location.pathname)) {
         box.append(
           h('a', { class: 'btn ghost small', href: '/account/login?next=' + encodeURIComponent(here()) }, 'Sign in'),
-          h('a', { class: 'btn primary small', href: '/account/register?next=' + encodeURIComponent(here()) }, 'Join'));
+          h('a', { class: 'btn primary small', href: '/account/register?next=' + encodeURIComponent(here()) }, 'Register'));
       }
       return null;
     }
@@ -191,7 +192,7 @@
       h('div', { class: 'menu' },
         h('a', { href: '/forum/new' }, 'New thread'),
         h('a', { href: '/forum/user?name=' + encodeURIComponent(user.name) }, 'Your profile'),
-        h('a', { href: '/account/' }, 'Account settings'),
+        h('a', { href: '/account/' }, 'Settings'),
         h('div', { class: 'sep' }),
         h('button', { type: 'button', onclick: signOut }, 'Sign out')));
     document.addEventListener('click', (e) => { if (!menu.contains(e.target)) menu.open = false; });
@@ -207,7 +208,7 @@
   // Forum: thread list
   // =========================================================================================================
   async function pageList() {
-    const state = { game: GAMES[qs.get('game')] ? qs.get('game') : 'all', sort: qs.get('sort') || 'activity', q: qs.get('q') || '', page: Number(qs.get('page')) || 1 };
+    const state = { game: isGame(qs.get('game')) ? qs.get('game') : 'all', sort: qs.get('sort') || 'activity', q: qs.get('q') || '', page: Number(qs.get('page')) || 1 };
     const tabs = $('#tabs'), sortBox = $('#sort'), search = $('#q'), list = $('#list'), pager = $('#pager'), newBtn = $('#new-thread');
     search.value = state.q;
 
@@ -233,7 +234,7 @@
     }
     function drawSort() {
       sortBox.textContent = '';
-      for (const [key, label] of [['activity', 'Latest'], ['new', 'Newest'], ['replies', 'Most replies']]) {
+      for (const [key, label] of [['activity', 'Active'], ['new', 'Newest'], ['replies', 'Most replies']]) {
         sortBox.append(h('button', { type: 'button', 'aria-pressed': String(state.sort === key), onclick: () => { state.sort = key; state.page = 1; go(); } }, label));
       }
     }
@@ -315,7 +316,7 @@
     $('#search-form').addEventListener('submit', (e) => { e.preventDefault(); clearTimeout(typing); state.q = search.value.trim(); state.page = 1; go(); });
     window.addEventListener('popstate', () => {
       const p = new URLSearchParams(location.search);
-      state.game = GAMES[p.get('game')] ? p.get('game') : 'all'; state.sort = p.get('sort') || 'activity';
+      state.game = isGame(p.get('game')) ? p.get('game') : 'all'; state.sort = p.get('sort') || 'activity';
       state.q = p.get('q') || ''; state.page = Number(p.get('page')) || 1; search.value = state.q;
       go(false);
     });
@@ -474,7 +475,7 @@
           h('h3', {}, 'Sign in to reply'),
           h('div', { class: 'btns' },
             h('a', { class: 'btn', href: '/account/login?next=' + encodeURIComponent(here()) }, 'Sign in'),
-            h('a', { class: 'btn primary', href: '/account/register?next=' + encodeURIComponent(here()) }, 'Create account')));
+            h('a', { class: 'btn primary', href: '/account/register?next=' + encodeURIComponent(here()) }, 'Register')));
       }
       return h('div', { class: 'gate' }, h('h3', {}, 'This account is blocked from posting'));
     }
@@ -537,7 +538,7 @@
     const user = await me();
     if (!user) { location.replace('/account/login?next=' + encodeURIComponent(here())); return; }
     const form = $('#new-form'), title = $('#title'), body = $('#body'), err = $('#new-error'), send = $('#new-send');
-    const want = GAMES[qs.get('game')] ? qs.get('game') : null;
+    const want = isGame(qs.get('game')) ? qs.get('game') : null;
     if (want) form.querySelector(`input[name="game"][value="${want}"]`).checked = true;
     counter(title, 120, $('#title-count'));
     counter(body, 20000, $('#body-count'));
@@ -594,29 +595,7 @@
   // Accounts
   // =========================================================================================================
   function card(...kids) { const c = $('#card'); c.textContent = ''; c.append(...kids.filter((k) => k != null && k !== false)); return c; }
-  function resendBox(email, note) {
-    const out = h('div');
-    const btn = h('button', { class: 'btn wide', type: 'button' }, icon('mail'), 'Resend link');
-    btn.addEventListener('click', async () => {
-      busy(btn, true, 'Sending...'); out.textContent = '';
-      try {
-        const d = await api('POST', 'auth/resend', { email });
-        out.append(d.mailed === false ? msg('bad', "Couldn't send the email. Try again shortly.") : msg('good', 'Sent.'), devLink(d));
-      } catch (e) { out.append(msg('bad', e.message)); }
-      busy(btn, false);
-    });
-    return h('div', { class: 'field' }, note ? h('p', { class: 'sub' }, note) : null, btn, out);
-  }
-
-  function checkInbox(email, data) {
-    card(h('div', { class: 'big-ico' }, icon('mail')),
-      h('div', {}, h('h1', {}, 'Check your inbox'),
-        h('p', { class: 'sub' }, 'Confirmation link sent to ', h('b', {}, email), '.')),
-      data && data.mailed === false ? msg('bad', "Couldn't send the email. Try again shortly.") : null,
-      devLink(data),
-      resendBox(email),
-      h('p', { class: 'auth-foot' }, h('a', { href: '/account/register' }, 'Use a different email')));
-  }
+  const EMAIL_NOTE = 'Only used to reset your password. Never shown to anyone.';
 
   async function pageLogin() {
     if (await me()) { location.replace(nextUrl()); return; }
@@ -631,7 +610,6 @@
       } catch (x) {
         busy(send, false);
         err.append(msg('bad', x.message));
-        if (x.code === 'unverified' && x.data && x.data.email) err.append(resendBox(x.data.email));
       }
     });
   }
@@ -652,25 +630,32 @@
 
   async function pageRegister() {
     if (await me()) { location.replace(nextUrl()); return; }
-    const form = $('#register-form'), err = $('#register-error'), send = $('#register-send');
+    const form = $('#register-form'), err = $('#register-error'), send = $('#register-send'), ownerBox = $('#owner-box');
     $('#to-login').href = '/account/login' + (qs.get('next') ? '?next=' + encodeURIComponent(qs.get('next')) : '');
     turnstileSetup($('#ts'));
     form.addEventListener('submit', async (e) => {
       e.preventDefault(); err.textContent = '';
       if (form.password.value !== form.password2.value) { err.append(msg('bad', "Passwords don't match.")); return; }
-      busy(send, true, 'Creating...');
+      busy(send, true, 'Registering...');
       try {
+        const email = form.email.value.trim();
         const d = await api('POST', 'auth/register', {
-          username: form.username.value, email: form.email.value, password: form.password.value,
+          username: form.username.value, password: form.password.value, email: email || undefined,
+          owner_code: ownerBox.hidden ? undefined : form.owner_code.value,
+          website: form.website.value,
           turnstile: turnstileId != null && window.turnstile ? window.turnstile.getResponse(turnstileId) : undefined,
         });
-        try { sessionStorage.setItem('nv-next', nextUrl()); } catch (x) { /* no storage */ }
-        checkInbox(d.email, d);
+        if (!d.emailSent) { location.href = nextUrl(); return; }
+        card(h('div', { class: 'big-ico ok' }, icon('check')),
+          h('div', {}, h('h1', {}, `Welcome, ${d.user.name}`), h('p', { class: 'sub' }, 'Confirmation link sent to ', h('b', {}, email), '.')),
+          devLink(d),
+          h('a', { class: 'btn primary wide', href: nextUrl() }, 'Continue'));
       } catch (x) {
         busy(send, false);
         err.append(msg('bad', x.message));
         if (turnstileId != null && window.turnstile) window.turnstile.reset(turnstileId);
-        const bad = { username: form.username, email: form.email, password: form.password }[x.code];
+        if (x.code === 'reserved' && ownerBox.hidden) { ownerBox.hidden = false; form.owner_code.focus(); return; }
+        const bad = { username: form.username, email: form.email, password: form.password, reserved: form.owner_code }[x.code];
         if (bad) bad.focus();
       }
     });
@@ -680,32 +665,16 @@
     const token = qs.get('token');
     history.replaceState(null, '', '/account/verify');
     if (!token) {
-      card(h('h1', {}, 'Confirm your email'), h('a', { class: 'btn wide', href: '/account/login' }, 'Sign in'));
+      card(h('h1', {}, 'Confirm your email'), h('a', { class: 'btn wide', href: '/account/' }, 'Settings'));
       return;
     }
     try {
-      const d = await api('POST', 'auth/verify', { token });
-      let next = '/forum/';
-      try { next = sessionStorage.getItem('nv-next') || next; sessionStorage.removeItem('nv-next'); } catch (e) { /* no storage */ }
-      card(h('div', { class: 'big-ico ok' }, icon('check')),
-        h('div', {}, h('h1', {}, 'Email confirmed'), h('p', { class: 'sub' }, `Welcome, ${d.user.name}.`)),
-        h('a', { class: 'btn primary wide', href: next }, 'Go to the forum'));
-      header();
-      setTimeout(() => { location.href = next; }, 3500);
+      await api('POST', 'auth/verify-email', { token });
+      card(h('div', { class: 'big-ico ok' }, icon('check')), h('h1', {}, 'Email confirmed'),
+        h('a', { class: 'btn primary wide', href: '/forum/' }, 'Go to the forum'));
     } catch (e) {
-      const email = h('input', { class: 'input', type: 'email', placeholder: 'you@example.com', autocomplete: 'email', 'aria-label': 'Email' });
-      const out = h('div');
-      const btn = h('button', { class: 'btn primary wide', type: 'submit' }, 'Send new link');
-      const form = h('form', {}, email, btn, out);
-      form.addEventListener('submit', async (ev) => {
-        ev.preventDefault(); out.textContent = ''; busy(btn, true, 'Sending...');
-        try { const d = await api('POST', 'auth/resend', { email: email.value }); out.append(msg('good', 'Sent, if the account still needs confirming.'), devLink(d)); }
-        catch (x) { out.append(msg('bad', x.message)); }
-        busy(btn, false);
-      });
-      card(h('div', { class: 'big-ico' }, icon('warn')),
-        h('div', {}, h('h1', {}, 'Link expired'), h('p', { class: 'sub' }, 'Enter your email for a new one.')),
-        form, h('p', { class: 'auth-foot' }, h('a', { href: '/account/login' }, 'Sign in')));
+      card(h('div', { class: 'big-ico' }, icon('warn')), h('h1', {}, 'Link expired'),
+        h('a', { class: 'btn wide', href: '/account/' }, 'Settings'));
     }
   }
 
@@ -718,7 +687,7 @@
         const d = await api('POST', 'auth/forgot', { email: form.email.value });
         card(h('div', { class: 'big-ico' }, icon('mail')),
           h('div', {}, h('h1', {}, 'Check your inbox'),
-            h('p', { class: 'sub' }, 'If ', h('b', {}, form.email.value.trim()), ' has an account, a reset link is on its way.')),
+            h('p', { class: 'sub' }, 'If ', h('b', {}, form.email.value.trim()), ' is linked to an account, a reset link is on its way.')),
           devLink(d),
           h('a', { class: 'btn wide', href: '/account/login' }, 'Back to sign in'));
       } catch (x) { busy(send, false); err.append(msg('bad', x.message)); }
@@ -739,8 +708,7 @@
       busy(send, true, 'Saving...');
       try {
         await api('POST', 'auth/reset', { token, password: form.password.value });
-        card(h('div', { class: 'big-ico ok' }, icon('check')),
-          h('h1', {}, 'Password changed'),
+        card(h('div', { class: 'big-ico ok' }, icon('check')), h('h1', {}, 'Password changed'),
           h('a', { class: 'btn primary wide', href: '/forum/' }, 'Go to the forum'));
         header();
       } catch (x) {
@@ -752,32 +720,86 @@
   }
 
   async function pageAccount() {
-    const user = await me();
+    let user = await me();
     if (!user) { location.replace('/account/login?next=/account/'); return; }
     const root = $('#account');
-    const pwForm = h('form', { class: 'card', id: 'pw-form' },
-      h('span', { class: 'label' }, 'Change password'),
+
+    // ---- email
+    const emailCard = h('div', { class: 'card' });
+    function drawEmail() {
+      emailCard.textContent = '';
+      const status = user.email
+        ? h('div', { class: 'email-now' }, h('b', {}, user.email), h('span', { class: 'ok-tag' }, 'Confirmed'))
+        : h('div', { class: 'email-now' }, h('span', { class: 'hint' }, 'No email added'));
+      const pending = user.emailPending
+        ? h('div', { class: 'email-now' }, h('span', {}, user.emailPending), h('span', { class: 'wait-tag' }, 'Waiting for confirmation'),
+          h('button', { class: 'btn ghost small', type: 'button', onclick: resend }, 'Resend'))
+        : null;
+      const input = h('input', { class: 'input', type: 'email', name: 'email', maxlength: 254, autocomplete: 'email', 'aria-label': 'Email', placeholder: user.email ? 'New email' : 'Email' });
+      const pw = pwField('email-pw', 'Password', { auto: 'current-password' });
+      const out = h('div');
+      const save = h('button', { class: 'btn primary', type: 'submit' }, user.email ? 'Change email' : 'Add email');
+      const remove = user.email || user.emailPending ? h('button', { class: 'btn danger', type: 'button' }, 'Remove email') : null;
+      const form = h('form', { class: 'stack', novalidate: true }, input, pw, out, h('div', { class: 'row' }, save, remove));
+      emailCard.append(...[h('span', { class: 'label' }, 'Email'), h('p', { class: 'hint' }, EMAIL_NOTE), status, pending, form].filter(Boolean));
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault(); out.textContent = '';
+        busy(save, true, 'Saving...');
+        try {
+          const d = await api('POST', 'account/email', { email: input.value, password: $('#email-pw').value });
+          user = await me(true);
+          drawEmail();
+          emailCard.append(msg('good', 'Confirmation link sent.'), devLink(d));
+        } catch (x) { busy(save, false); out.append(msg('bad', x.message)); }
+      });
+      if (remove) {
+        remove.addEventListener('click', async () => {
+          out.textContent = '';
+          if (!$('#email-pw').value) { out.append(msg('bad', 'Enter your password to remove the email.')); $('#email-pw').focus(); return; }
+          busy(remove, true, 'Removing...');
+          try {
+            await api('POST', 'account/email/remove', { password: $('#email-pw').value });
+            user = await me(true);
+            drawEmail();
+            emailCard.append(msg('good', 'Email removed.'));
+          } catch (x) { busy(remove, false); out.append(msg('bad', x.message)); }
+        });
+      }
+    }
+    async function resend(e) {
+      const btn = e.currentTarget;
+      busy(btn, true, 'Sending...');
+      try { const d = await api('POST', 'account/email/resend', {}); toast('Sent.'); if (d.devLink) emailCard.append(devLink(d)); }
+      catch (x) { toast(x.message, true); }
+      busy(btn, false);
+    }
+
+    // ---- password
+    const pwForm = h('form', { class: 'card', id: 'pw-form', novalidate: true },
+      h('span', { class: 'label' }, 'Password'),
       pwField('current', 'Current password', { auto: 'current-password' }),
       pwField('password', 'New password', { auto: 'new-password', min: 8 }),
       pwField('password2', 'Confirm password', { auto: 'new-password', min: 8 }),
       h('div', { id: 'pw-error' }),
-      h('button', { class: 'btn primary', type: 'submit', id: 'pw-send' }, icon('key'), 'Save'));
+      h('div', {}, h('button', { class: 'btn primary', type: 'submit', id: 'pw-send' }, 'Change password')));
+
     root.textContent = '';
     root.append(h('div', { class: 'acct' },
       h('div', { class: 'card me' }, avatar(user.name, 'lg'), h('h2', {}, user.name), user.admin ? h('span', { class: 'role' }, 'Admin') : null,
-        h('p', { class: 'hint' }, user.email),
         h('div', { class: 'stats' }, h('div', {}, h('b', {}, short(user.posts)), h('small', {}, 'posts')),
           h('div', {}, h('b', {}, new Date(user.joined).toLocaleDateString(undefined, { month: 'short', year: 'numeric' })), h('small', {}, 'joined'))),
         h('a', { class: 'btn wide', href: '/forum/user?name=' + encodeURIComponent(user.name) }, 'Your profile'),
         h('button', { class: 'btn ghost wide', type: 'button', onclick: signOut }, icon('out'), 'Sign out')),
-      pwForm));
+      h('div', { class: 'stack' }, emailCard, pwForm)));
+    drawEmail();
+
     const err = $('#pw-error'), send = $('#pw-send');
     pwForm.addEventListener('submit', async (e) => {
       e.preventDefault(); err.textContent = '';
       if (pwForm.password.value !== pwForm.password2.value) { err.append(msg('bad', "Passwords don't match.")); return; }
       busy(send, true, 'Saving...');
       try {
-        await api('POST', 'auth/password', { current: pwForm.current.value, password: pwForm.password.value });
+        await api('POST', 'account/password', { current: pwForm.current.value, password: pwForm.password.value });
         pwForm.reset(); err.append(msg('good', 'Password changed.'));
       } catch (x) { err.append(msg('bad', x.message)); }
       busy(send, false);

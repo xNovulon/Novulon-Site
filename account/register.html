@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Create a Novulon forum account.">
+<meta name="description" content="Register on the Novulon forum.">
 <link rel="icon" href="/img/novulon-logo.svg" type="image/svg+xml">
-<title>Create account · Novulon</title>
+<title>Register · Novulon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
@@ -25,15 +25,17 @@
 
 <main class="auth">
   <div class="auth-card" id="card">
-    <h1>Create account</h1>
+    <h1>Register</h1>
     <form id="register-form" novalidate>
       <label class="field" for="username"><span>Name</span><input class="input" id="username" name="username" required autocomplete="username" minlength="3" maxlength="20"></label>
-      <label class="field" for="email"><span>Email</span><input class="input" id="email" name="email" type="email" required autocomplete="email" maxlength="254"></label>
+      <div class="field" id="owner-box" hidden><label class="field" for="owner_code"><span>Owner code</span><div class="pw"><input class="input" type="password" id="owner_code" name="owner_code" required autocomplete="off" maxlength="200"><button type="button" data-toggle="owner_code" aria-label="Show password">Show</button></div></label></div>
       <label class="field" for="password"><span>Password</span><div class="pw"><input class="input" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="200"><button type="button" data-toggle="password" aria-label="Show password">Show</button></div></label>
       <label class="field" for="password2"><span>Confirm password</span><div class="pw"><input class="input" type="password" id="password2" name="password2" required autocomplete="new-password" minlength="8" maxlength="200"><button type="button" data-toggle="password2" aria-label="Show password">Show</button></div></label>
+      <label class="field" for="email"><span>Email <span class="optional">(optional)</span></span><input class="input" id="email" name="email" type="email" autocomplete="email" maxlength="254"><small>Only used to reset your password. Never shown to anyone.</small></label>
+      <div class="hp" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off"></div>
       <div id="ts"></div>
       <div id="register-error"></div>
-      <button class="btn primary wide" type="submit" id="register-send">Create account</button>
+      <button class="btn primary wide" type="submit" id="register-send">Register</button>
     </form>
     <p class="auth-foot"><a id="to-login" href="/account/login">Sign in instead</a></p>
   </div>

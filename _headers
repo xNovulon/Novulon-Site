@@ -1,12 +1,18 @@
-# Forum and account pages: only this site's own scripts run, nothing can frame them, and links out carry no path.
+# Every page: https only, no type guessing, no camera/mic/location, no framing by other sites.
+/*
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  X-Content-Type-Options: nosniff
+  Permissions-Policy: camera=(), microphone=(), geolocation=(), payment=(), usb=()
+  X-Frame-Options: SAMEORIGIN
+
+# Forum and account pages: only this site's own scripts run and nothing can frame them (the /* rules above apply too;
+# a header listed twice would be joined into one invalid value, so none is repeated here).
 /forum/*
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src https://challenges.cloudflare.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
+  Cross-Origin-Opener-Policy: same-origin
 
 /account/*
   Content-Security-Policy: default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-src https://challenges.cloudflare.com; base-uri 'none'; form-action 'self'; frame-ancestors 'none'; object-src 'none'
-  X-Frame-Options: DENY
-  X-Content-Type-Options: nosniff
   Referrer-Policy: no-referrer
+  Cross-Origin-Opener-Policy: same-origin

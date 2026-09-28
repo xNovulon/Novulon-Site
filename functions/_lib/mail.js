@@ -168,9 +168,9 @@ function layout(title, intro, button, link, foot) {
 export function verifyEmail(username, link) {
   return {
     subject: 'Confirm your email for the Novulon forum',
-    text: `Hi ${username},\n\nConfirm your email to finish creating your Novulon account:\n${link}\n\nThe link expires in 24 hours. If you didn't sign up, ignore this email.`,
-    html: layout('Confirm your email', `Hi ${esc(username)}, confirm your email to finish creating your Novulon account.`,
-      'Confirm email', link, 'The link expires in 24 hours. If you didn\'t sign up, ignore this email.'),
+    text: `Hi ${username},\n\nConfirm this email for your Novulon account:\n${link}\n\nThe link expires in 24 hours. If this wasn't you, ignore this email.`,
+    html: layout('Confirm your email', `Hi ${esc(username)}, confirm this email for your Novulon account.`,
+      'Confirm email', link, 'The link expires in 24 hours. If this wasn\'t you, ignore this email.'),
   };
 }
 
@@ -180,6 +180,16 @@ export function resetEmail(username, link) {
     text: `Hi ${username},\n\nReset your Novulon password here:\n${link}\n\nThe link expires in 1 hour. If you didn't request this, ignore this email.`,
     html: layout('Reset your password', `Hi ${esc(username)}, use the button below to choose a new password.`,
       'Reset password', link, 'The link expires in 1 hour. If you didn\'t request this, ignore this email.'),
+  };
+}
+
+export function emailTakenNotice(origin) {
+  const link = `${origin}/account/forgot`;
+  return {
+    subject: 'Your email was entered on the Novulon forum',
+    text: `Someone tried to add this email to a Novulon account, but it already belongs to another account.\n\nIf this was you, sign in to your existing account, or reset its password here:\n${link}\n\nIf it wasn't you, ignore this email. Nothing changed.`,
+    html: layout('This email is already in use', 'Someone tried to add this email to a Novulon account, but it already belongs to another account. If this was you, sign in to your existing account or reset its password.',
+      'Reset password', link, "If it wasn't you, ignore this email. Nothing changed."),
   };
 }
 

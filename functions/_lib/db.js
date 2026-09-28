@@ -1,22 +1,37 @@
-// Database: Cloudflare D1, bound to the Pages project as DB.
+// Database: Cloudflare D1, bound to the Pages project as DB. Nothing in it is reachable except through the API.
 // The tables are created on the first request of each worker, so a fresh database needs no manual setup.
 
-const SCHEMA_VERSION = '1';
+const SCHEMA_VERSION = '2';
 
-const SCHEMA = [
-  `CREATE TABLE IF NOT EXISTS users (
+// email: the confirmed address (or NULL). email_pending: an address waiting for its confirmation link.
+const USERS_TABLE = `CREATE TABLE IF NOT EXISTS users (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
      username TEXT NOT NULL,
      username_key TEXT NOT NULL UNIQUE,
-     email TEXT NOT NULL UNIQUE,
+     email TEXT UNIQUE,
+     email_pending TEXT,
      pass_hash TEXT NOT NULL,
      pass_salt TEXT NOT NULL,
      pass_iter INTEGER NOT NULL,
-     verified_at INTEGER,
      role TEXT NOT NULL DEFAULT 'member',
      banned INTEGER NOT NULL DEFAULT 0,
      post_count INTEGER NOT NULL DEFAULT 0,
-     created_at INTEGER NOT NULL)`,
+     created_at INTEGER NOT NULL)`;
+
+// version 1 required a confirmed email for every account
+const MIGRATE_1_TO_2 = [
+  `ALTER TABLE users RENAME TO users_v1`,
+  USERS_TABLE,
+  `INSERT INTO users (id, username, username_key, email, pass_hash, pass_salt, pass_iter, role, banned, post_count, created_at)
+     SELECT id, username, username_key, CASE WHEN verified_at IS NOT NULL THEN email END, pass_hash, pass_salt, pass_iter,
+            role, banned, post_count, created_at FROM users_v1`,
+  `DROP TABLE users_v1`,
+  `ALTER TABLE tokens ADD COLUMN data TEXT`,
+  `DELETE FROM tokens`,
+];
+
+const SCHEMA = [
+  USERS_TABLE,
   `CREATE TABLE IF NOT EXISTS sessions (
      token_hash TEXT PRIMARY KEY,
      user_id INTEGER NOT NULL,
@@ -28,7 +43,8 @@ const SCHEMA = [
      user_id INTEGER NOT NULL,
      kind TEXT NOT NULL,
      expires_at INTEGER NOT NULL,
-     used_at INTEGER)`,
+     used_at INTEGER,
+     data TEXT)`,
   `CREATE INDEX IF NOT EXISTS tokens_user ON tokens(user_id, kind)`,
   `CREATE TABLE IF NOT EXISTS threads (
      id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -73,6 +89,11 @@ export function ensureSchema(db) {
       try {
         const row = await db.prepare(`SELECT v FROM meta WHERE k = 'schema'`).first();
         if (row && row.v === SCHEMA_VERSION) return;
+        if (row && row.v === '1') {
+          await db.batch(MIGRATE_1_TO_2.map((sql) => db.prepare(sql)));
+          await db.prepare(`UPDATE meta SET v = ?1 WHERE k = 'schema'`).bind(SCHEMA_VERSION).run();
+          return;
+        }
       } catch (e) { /* no meta table yet */ }
       await db.batch(SCHEMA.map((sql) => db.prepare(sql)));
       await db.prepare(`INSERT INTO meta (k, v) VALUES ('schema', ?1) ON CONFLICT(k) DO UPDATE SET v = ?1`).bind(SCHEMA_VERSION).run();

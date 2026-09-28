@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Sign in to the Novulon forum.">
+<link rel="icon" href="/img/novulon-logo.svg" type="image/svg+xml">
+<title>Sign in · Novulon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/forum/forum.css?v=1">
+<script src="/forum/forum.js?v=1" defer></script>
+</head>
+<body data-page="login">
+<div class="grain" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/novulon-logo.svg" alt=""><b>NOVULON</b></a>
+    <nav class="nav" aria-label="Site"><a href="/">Downloads</a><a href="/forum/">Forum</a></nav>
+    <span class="grow"></span>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<main class="auth">
+  <div class="auth-card" id="card">
+    <h1>Sign in</h1>
+    <form id="login-form" novalidate>
+      <label class="field" for="login"><span>Name or email</span><input class="input" id="login" name="login" required autocomplete="username" maxlength="254"></label>
+      <label class="field" for="password"><span>Password</span><div class="pw"><input class="input" type="password" id="password" name="password" required autocomplete="current-password" maxlength="200"><button type="button" data-toggle="password" aria-label="Show password">Show</button></div></label>
+      <div class="split"><span></span><a href="/account/forgot">Forgot your password?</a></div>
+      <div id="login-error"></div>
+      <button class="btn primary wide" type="submit" id="login-send">Sign in</button>
+    </form>
+    <p class="auth-foot"><a id="to-register" href="/account/register">Create an account</a></p>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap"><span>Novulon</span><span><a href="/">novulon.pages.dev</a></span></div>
+</footer>
+</body>
+</html>

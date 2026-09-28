@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Choose a new Novulon forum password.">
+<link rel="icon" href="/img/novulon-logo.svg" type="image/svg+xml">
+<title>New password · Novulon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/forum/forum.css?v=1">
+<script src="/forum/forum.js?v=1" defer></script>
+</head>
+<body data-page="reset">
+<div class="grain" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/novulon-logo.svg" alt=""><b>NOVULON</b></a>
+    <nav class="nav" aria-label="Site"><a href="/">Downloads</a><a href="/forum/">Forum</a></nav>
+    <span class="grow"></span>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<main class="auth">
+  <div class="auth-card" id="card">
+    <h1>New password</h1>
+    <form id="reset-form" novalidate>
+      <label class="field" for="password"><span>New password</span><div class="pw"><input class="input" type="password" id="password" name="password" required autocomplete="new-password" minlength="8" maxlength="200"><button type="button" data-toggle="password" aria-label="Show password">Show</button></div></label>
+      <label class="field" for="password2"><span>Confirm password</span><div class="pw"><input class="input" type="password" id="password2" name="password2" required autocomplete="new-password" minlength="8" maxlength="200"><button type="button" data-toggle="password2" aria-label="Show password">Show</button></div></label>
+      <div id="reset-error"></div>
+      <button class="btn primary wide" type="submit" id="reset-send">Save password</button>
+    </form>
+  </div>
+</main>
+<footer class="site-foot">
+  <div class="wrap"><span>Novulon</span><span><a href="/">novulon.pages.dev</a></span></div>
+</footer>
+</body>
+</html>

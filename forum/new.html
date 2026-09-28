@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Start a thread on the Novulon forum.">
+<link rel="icon" href="/img/novulon-logo.svg" type="image/svg+xml">
+<title>New thread · Novulon forum</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700;12..96,800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="/forum/forum.css?v=1">
+<script src="/forum/forum.js?v=1" defer></script>
+</head>
+<body data-page="new">
+<div class="grain" aria-hidden="true"></div>
+<header class="bar">
+  <div class="wrap">
+    <a class="brand" href="/"><img src="/img/novulon-logo.svg" alt=""><b>NOVULON</b></a>
+    <nav class="nav" aria-label="Site"><a href="/">Downloads</a><a href="/forum/" aria-current="page">Forum</a></nav>
+    <span class="grow"></span>
+    <div class="who" id="who"></div>
+  </div>
+</header>
+
+<main class="wrap narrow page">
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="/forum/">Forum</a><span>/</span><span>New thread</span></nav>
+  <section class="hero-f"><div><h1>New <span>thread</span></h1></div></section>
+  <form class="form-card" id="new-form" novalidate>
+    <div class="field" role="radiogroup" aria-labelledby="game-label">
+      <span id="game-label">Game</span>
+      <div class="games-pick">
+        <label class="sims"><input type="radio" name="game" value="sims"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.8 17 12l-5 9.2L7 12z"/><path d="M7 12h10"/></svg></span><span><b>The Sims 4</b></span></label>
+        <label class="inzoi"><input type="radio" name="game" value="inzoi"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" aria-hidden="true"><path d="M12 3.5 14 10l6.5 2-6.5 2-2 6.5-2-6.5L3.5 12 10 10z"/></svg></span><span><b>inZOI</b></span></label>
+      </div>
+    </div>
+    <label class="field" for="title"><span>Title</span><input class="input" id="title" name="title" maxlength="120" required autocomplete="off"><span class="count" id="title-count"></span></label>
+    <label class="field" for="body"><span>Description</span><textarea class="textarea" id="body" name="body" maxlength="20000" required></textarea><span class="count" id="body-count"></span></label>
+    <div id="new-error"></div>
+    <div><button class="btn primary" type="submit" id="new-send">Post thread</button></div>
+  </form>
+</main>
+<footer class="site-foot">
+  <div class="wrap"><span>Novulon</span><span><a href="/">novulon.pages.dev</a></span></div>
+</footer>
+</body>
+</html>

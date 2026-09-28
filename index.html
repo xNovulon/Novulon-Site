@@ -67,6 +67,8 @@
   .bar .grow { flex: 1; }
   .bar nav a { font-weight: 600; font-size: 14px; color: var(--muted); text-decoration: none; }
   .bar nav a:hover { color: var(--text); }
+  .top-nav a { display: inline-flex; align-items: center; height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid var(--line-2); background: rgba(255, 255, 255, .04); }
+  .top-nav a:hover { background: rgba(255, 255, 255, .09); }
   .coffee { display: inline-flex; align-items: center; gap: 8px; height: 38px; padding: 0 15px 0 12px; border-radius: 999px; font-weight: 700;
     font-size: 14px; text-decoration: none; color: #ffe6bf; background: rgba(251, 191, 36, .1); border: 1px solid rgba(251, 191, 36, .4);
     transition: background .2s, transform .2s; }
@@ -244,6 +246,7 @@
 <header class="bar">
   <div class="wrap">
     <a class="brand" href="#top"><img src="img/novulon-logo.svg" alt=""><b>NOVULON</b></a>
+    <nav class="top-nav" aria-label="Site"><a href="/forum/">Forum</a></nav>
     <span class="grow"></span>
     <a class="coffee" id="coffee" hidden target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M5 9.5h11v4.5a5 5 0 0 1-5 5h-1a5 5 0 0 1-5-5zM16 10.5h1.3a2.4 2.4 0 0 1 0 4.8H16M9 3.8c-.7.9-.7 1.9 0 2.8M12.4 3.8c-.7.9-.7 1.9 0 2.8"/></svg><span>Buy me a coffee</span></a>
   </div>

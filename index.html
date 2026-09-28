@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Apps, tools and mods by Novulon: Sims Hub and Wicked Animator for The Sims 4, and StatCheats, AI Remade and Lag Remover for inZOI.">
+<meta name="description" content="Apps, tools and mods by Novulon: Sims Hub and Wicked Animator for The Sims 4, and ZOI Overhaul for inZOI.">
 <link rel="icon" href="img/novulon-logo.svg" type="image/svg+xml">
 <title>Novulon</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -96,6 +96,9 @@
   .games button[aria-selected="true"] { color: #fff; background: var(--grad); box-shadow: 0 12px 34px -12px rgba(255, 79, 154, .8); }
   .games .count { font: 600 11px/1 var(--mono); padding: 4px 7px; border-radius: 999px; background: rgba(255, 255, 255, .12); }
   .cards.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cards.one { grid-template-columns: minmax(0, 1fr); }
+  .cards.one .card .shot { aspect-ratio: 21 / 9; }
+  .cards.one .card .pitch { max-width: 60ch; }
   .note { padding: 16px 18px; border-radius: 16px; background: rgba(255, 79, 154, .07); border: 1px solid rgba(255, 79, 154, .3); color: #e9dff6; font-size: 14.5px; }
   .note b { color: #fff; }
   code.path { font: 500 13px/1.4 var(--mono); padding: 2px 7px; border-radius: 7px; background: rgba(255, 255, 255, .07); border: 1px solid var(--line); word-break: break-all; }
@@ -215,6 +218,7 @@
   @media (max-width: 1100px) { .cards.three { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
   @media (max-width: 860px) {
     .cards, .cards.three { grid-template-columns: 1fr; }
+    .cards.one .card .shot { aspect-ratio: 16 / 10; }
     .card .body { padding: 4px 22px 24px; }
     .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .gallery, .gallery.three { grid-template-columns: 1fr; }
@@ -229,6 +233,7 @@
     .sheet { margin-top: -40px; gap: 22px; }
     .sheet-head img { width: 56px; height: 56px; }
     .cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .cards.one { grid-template-columns: minmax(0, 1fr); }
     .card .body { padding: 4px 20px 22px; }
     .card .head img { width: 48px; height: 48px; }
   }
@@ -264,7 +269,7 @@
   <!-- One tab per game; each tab shows its own group below. -->
   <div class="games" role="tablist" aria-label="Games">
     <button role="tab" id="tab-sims" aria-controls="grp-sims" aria-selected="true" data-game="sims">The Sims 4<span class="count">2</span></button>
-    <button role="tab" id="tab-inzoi" aria-controls="grp-inzoi" aria-selected="false" data-game="inzoi">inZOI<span class="count">3</span></button>
+    <button role="tab" id="tab-inzoi" aria-controls="grp-inzoi" aria-selected="false" data-game="inzoi">inZOI<span class="count">1</span></button>
   </div>
 
   <!-- A project group. Add more groups below this one for other kinds of work. -->
@@ -301,33 +306,15 @@
     <div class="group-head">
       <span class="n">02</span>
       <h3 id="g-inzoi">inZOI</h3>
-      <span class="meta">In-game mods &middot; 3 projects</span>
+      <span class="meta">In-game mod &middot; 1 project</span>
       <span class="rule"></span>
     </div>
-    <div class="cards three">
-      <button class="card" data-open="dlg-sc" aria-haspopup="dialog">
-        <div class="shot"><img src="img/inzoi-sc-card.jpg" alt="StatCheats open in inZOI, on the money page"></div>
+    <div class="cards one">
+      <button class="card violet" data-open="dlg-ov" aria-haspopup="dialog">
+        <div class="shot"><img src="img/inzoi-ov-card.jpg" alt="Novulon's ZOI Overhaul open in inZOI"></div>
         <div class="body">
-          <div class="head"><img src="img/inzoi-statcheats.svg" alt=""><h4>StatCheats</h4></div>
-          <p class="pitch">A cheat menu inside the game. Change money, needs, skills, relationships and mood whenever you want.</p>
-          <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
-          <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
-        </div>
-      </button>
-      <button class="card violet" data-open="dlg-ai" aria-haspopup="dialog">
-        <div class="shot"><img src="img/inzoi-ai-card.jpg" alt="AI Remade's settings in inZOI"></div>
-        <div class="body">
-          <div class="head"><img src="img/inzoi-airemade.svg" alt=""><h4>AI Remade</h4></div>
-          <p class="pitch">Your zoi stops walking off on its own, the town feels more alive, and you decide how attractive you are.</p>
-          <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
-          <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
-        </div>
-      </button>
-      <button class="card" data-open="dlg-lag" aria-haspopup="dialog">
-        <div class="shot"><img src="img/inzoi-lag-card.jpg" alt="Lag Remover's details in inZOI"></div>
-        <div class="body">
-          <div class="head"><img src="img/inzoi-lagremover.svg" alt=""><h4>Lag Remover</h4></div>
-          <p class="pitch">Less lag and fewer sudden freezes, without lowering your graphics.</p>
+          <div class="head"><img src="img/inzoi-overhaul.svg" alt=""><h4>Novulon's ZOI Overhaul</h4></div>
+          <p class="pitch">One mod, one button. Smarter zois, a real attraction system, cheats for anyone, and smoother play, all in one window.</p>
           <div class="tags"><span class="tag free">Free</span><span class="tag">In-game mod</span></div>
           <span class="open"><i><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14m0 0-6-6m6 6-6 6"/></svg></i>See the mod</span>
         </div>
@@ -421,110 +408,82 @@
   </div>
 </dialog>
 
-<!-- ============================================================ inZOI: StatCheats -->
-<dialog id="dlg-sc" aria-labelledby="t-sc">
-  <div class="sheet-hero"><img src="img/inzoi-sc-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
+<!-- ============================================================ inZOI: ZOI Overhaul -->
+<dialog id="dlg-ov" aria-labelledby="t-ov">
+  <div class="sheet-hero"><img src="img/inzoi-ov-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
   <div class="sheet">
-    <div class="sheet-head"><img src="img/inzoi-statcheats.svg" alt=""><h2 id="t-sc">StatCheats</h2></div>
-    <p class="lead">A cheat menu that lives inside inZOI. Press the N button in the bottom right, pick a zoi, and change anything you like: their money, needs, skills, relationships or mood.</p>
+    <div class="sheet-head"><img src="img/inzoi-overhaul.svg" alt=""><h2 id="t-ov">Novulon's ZOI Overhaul</h2></div>
+    <p class="lead">Everything in one window: zois that act more like people, an attraction system, cheats for anyone, and smoother play. Press the purple N next to your icons to open it. Every part has its own switch.</p>
     <div class="actions">
-      <a class="btn primary" href="downloads/inzoi/Novulon-StatCheats.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download StatCheats</a>
+      <a class="btn primary" href="downloads/inzoi/Novulon-ZOI-Overhaul.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download ZOI Overhaul</a>
       <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
     </div>
     <span class="sub">Install</span>
     <ol class="steps">
-      <li><b>Download</b><span>The .zip above</span></li>
+      <li><b>Remove the old ones</b><span>Had StatCheats, AI Remade or Lag Remover? Delete their folders from <code class="path">Documents\inZOI\Mods\InGame</code> first</span></li>
       <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code>. It lands in the InGame folder there</span></li>
-      <li><b>Start inZOI</b><span>Load a save like you always do</span></li>
-      <li><b>Press N</b><span>The N button in the bottom right, next to the other icons</span></li>
+      <li><b>Load a save</b><span>Start inZOI and load a save like you always do</span></li>
+      <li><b>Press N</b><span>The purple N next to your icons in the bottom right</span></li>
     </ol>
-    <span class="sub">What it does</span>
-    <div class="feats">
-      <div class="feat"><b>Money</b><span>Type any amount and set it, or add more. You can also right-click the money on screen.</span></div>
-      <div class="feat"><b>Needs</b><span>Fill up hunger, sleep, fun and the rest, or freeze them so they never drop.</span></div>
-      <div class="feat"><b>Skills</b><span>Put any skill at any level with one click.</span></div>
-      <div class="feat"><b>Relationships</b><span>Make anyone a best friend, a partner or a stranger. Love only works between adults.</span></div>
-      <div class="feat"><b>Right-click a friend</b><span>In the game's own Relationships list, right-click someone to boost the relationship or delete it.</span></div>
-      <div class="feat"><b>Mood</b><span>Make your zoi happy, excited, calm or any other mood.</span></div>
-    </div>
-    <span class="sub">Inside the game</span>
-    <div class="gallery three">
-      <figure><img src="img/inzoi-sc-money.jpg" alt="Money page" loading="lazy"><figcaption>Set or add money</figcaption></figure>
-      <figure><img src="img/inzoi-sc-needs.jpg" alt="Needs page" loading="lazy"><figcaption>Needs you drag</figcaption></figure>
-      <figure><img src="img/inzoi-sc-skills.jpg" alt="Skills page" loading="lazy"><figcaption>Skills by level</figcaption></figure>
-      <figure><img src="img/inzoi-sc-relationships.jpg" alt="Relationships page" loading="lazy"><figcaption>Love, friendship and business</figcaption></figure>
-      <figure><img src="img/inzoi-sc-mood.jpg" alt="Mood page" loading="lazy"><figcaption>Every mood</figcaption></figure>
-      <figure><img src="img/inzoi-sc-menu.jpg" alt="The right-click money menu" loading="lazy"><figcaption>Right-click the money</figcaption></figure>
-    </div>
-  </div>
-</dialog>
+    <p class="note"><b>Optional:</b> with the game closed, open the mod's Start-up fixes folder and run <b>Apply start-up fixes</b> once. <b>Undo start-up fixes</b> puts everything back.</p>
 
-<!-- ============================================================ inZOI: AI Remade -->
-<dialog id="dlg-ai" aria-labelledby="t-ai">
-  <div class="sheet-hero"><img src="img/inzoi-ai-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
-  <div class="sheet">
-    <div class="sheet-head"><img src="img/inzoi-airemade.svg" alt=""><h2 id="t-ai">AI Remade</h2></div>
-    <p class="lead">Changes how zois think and act. Your zoi waits for you instead of wandering off, the people around town act more naturally, and an attraction setting decides how much others like you. You can turn every part on or off.</p>
-    <div class="actions">
-      <a class="btn primary" href="downloads/inzoi/Novulon-AI-Remade.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download AI Remade</a>
-      <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
-    </div>
-    <span class="sub">Install</span>
-    <ol class="steps">
-      <li><b>Download</b><span>The .zip above</span></li>
-      <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code>. It lands in the InGame folder there</span></li>
-      <li><b>Start inZOI</b><span>Load a save like you always do</span></li>
-      <li><b>Open it</b><span>Press N and pick AI Remade. Without StatCheats, it has its own button in the bottom right</span></li>
-    </ol>
-    <span class="sub">What it does</span>
+    <span class="sub">Your zoi</span>
     <div class="feats">
-      <div class="feat"><b>It asks first</b><span>When your zoi is hungry or tired, a button shows up at the top of the screen. Click it and they take care of it.</span></div>
-      <div class="feat"><b>No more walking off</b><span>Your zoi stays with you instead of leaving on their own, even in the middle of a conversation.</span></div>
-      <div class="feat"><b>A livelier town</b><span>People chat with each other, say hello to you and stop bumping into each other.</span></div>
-      <div class="feat"><b>How attractive you are</b><span>Pick a number from -10 to +10. The higher it is, the more adults come over to flirt with you.</span></div>
-      <div class="feat"><b>More yeses</b><span>The more someone likes you, the more likely they are to accept your invites and calls.</span></div>
-      <div class="feat"><b>Your pronouns</b><span>Choose he, she or your own words, and the game talks about your zoi that way. Romance is adults only.</span></div>
+      <div class="feat"><b>It asks first</b><span>Your zoi doesn't wander off on their own. When they need something, a button under the top bar pulses. Click it and they go take care of it.</span></div>
+      <div class="feat"><b>Take control</b><span>Turn it on and your zoi never acts by themselves, not even in an emergency.</span></div>
+      <div class="feat"><b>Walk away to end a chat</b><span>Walking off ends the conversation, so nobody holds you in place.</span></div>
+      <div class="feat"><b>No more auto run</b><span>Your zoi walks unless you hold Shift.</span></div>
+      <div class="feat"><b>Your pronouns</b><span>Auto, he, she or your own words.</span></div>
+      <div class="feat"><b>Over-the-shoulder camera</b><span>Press F8 to look around freely behind your zoi with no cursor. Pick another key if you like.</span></div>
     </div>
+
+    <span class="sub">A town that feels alive</span>
+    <div class="feats">
+      <div class="feat"><b>No more clipping</b><span>Zois who end up inside each other step apart and say hi.</span></div>
+      <div class="feat"><b>People talk</b><span>Zois chat with others their age, friends greet you by name, and passers-by think out loud about their day.</span></div>
+      <div class="feat"><b>Real personalities</b><span>Flirty and outgoing zois are bolder, shy ones hesitate, and mean or snobby ones are colder.</span></div>
+      <div class="feat"><b>2,560 lines</b><span>Everything above their heads is hand-written, from first looks to jealous gossip.</span></div>
+    </div>
+
+    <span class="sub">Attraction (adults only)</span>
+    <div class="feats">
+      <div class="feat"><b>How attractive you are</b><span>Pick a level from "seen as ugly" to "perfect". Adults notice you, stop and look, and after seeing you around they come over to say hi.</span></div>
+      <div class="feat"><b>Admirers</b><span>Some follow you at a distance, work up the nerve and call out "Excuse me!", or give up and walk away.</span></div>
+      <div class="feat"><b>More yeses</b><span>The higher your level, the more your hugs, kisses and flirts land. Calls, plans and visits can always get a yes.</span></div>
+      <div class="feat"><b>Into you</b><span>Each card in the game's Relationships list shows how into you they are, and whether you met in person or by text.</span></div>
+      <div class="feat"><b>You choose</b><span>When someone wants to hug or kiss you, a card asks if you're okay with it.</span></div>
+      <div class="feat"><b>Texts</b><span>Admirers text first, partners send sweet messages, and a photo with someone gets reactions, in the game's own phone.</span></div>
+      <div class="feat"><b>Jealousy and gossip</b><span>Admirers get jealous when someone else flirts with you, and flirting with someone taken gets people talking.</span></div>
+      <div class="feat"><b>Who likes who</b><span>Change who adults are attracted to: everyone, women, men or people you pick. You can undo it.</span></div>
+    </div>
+
+    <span class="sub">Cheats</span>
+    <div class="feats">
+      <div class="feat"><b>Money</b><span>Set or add any amount. You can also right-click your money on screen for a quick menu.</span></div>
+      <div class="feat"><b>Needs, skills and mood</b><span>For anyone in your household or nearby. Fill needs, freeze them at full, or make them drop 2 to 4 times slower. Put any skill at any level.</span></div>
+      <div class="feat"><b>Immortal</b><span>Pick any zoi and they never die, not even from starving.</span></div>
+      <div class="feat"><b>Relationships</b><span>Love, friendship and business with anyone. Right-click a card in the game's Relationships list to max it or delete it. Love only between adults.</span></div>
+      <div class="feat"><b>Town</b><span>Choose who shows up in town (normal, only men, only women or your own mix), and clear out crowds when you want a quieter city. No elders turns elders into adults. Never your zoi or your household, and it asks you to save first.</span></div>
+    </div>
+
+    <span class="sub">Performance</span>
+    <div class="feats">
+      <div class="feat"><b>Steady frame rate</b><span>Matched to your screen, so it stays even instead of jumping around.</span></div>
+      <div class="feat"><b>Less loading while you move</b><span>Keeps more of the town ready, so walking and driving don't stutter.</span></div>
+      <div class="feat"><b>Fewer sudden freezes</b><span>Gets effects ready while the game loads, not in the middle of playing. The sky updates less often too.</span></div>
+      <div class="feat"><b>Same graphics</b><span>Nothing is turned down, and every fix has an off switch that brings your own settings back.</span></div>
+    </div>
+
     <span class="sub">Inside the game</span>
-    <figure class="editor narrow"><img src="img/inzoi-ai-popup.jpg" alt="A button under the game's top toolbar: Jeff has somewhere to be" loading="lazy">
+    <figure class="editor narrow"><img src="img/inzoi-ov-needs.jpg" alt="A button under the game's top toolbar showing what your zoi needs" loading="lazy">
       <figcaption>What your zoi needs shows up at the top. One click and they go.</figcaption></figure>
-    <div class="gallery pair">
-      <figure><img src="img/inzoi-ai-1.jpg" alt="AI Remade, Behavior tab" loading="lazy"><figcaption>How your zoi behaves</figcaption></figure>
-      <figure><img src="img/inzoi-ai-2.jpg" alt="AI Remade, Attraction tab" loading="lazy"><figcaption>How attractive you are</figcaption></figure>
-    </div>
-  </div>
-</dialog>
-
-<!-- ============================================================ inZOI: Lag Remover -->
-<dialog id="dlg-lag" aria-labelledby="t-lag">
-  <div class="sheet-hero"><img src="img/inzoi-lag-hero.jpg" alt=""><button class="x" data-close aria-label="Close">&times;</button></div>
-  <div class="sheet">
-    <div class="sheet-head"><img src="img/inzoi-lagremover.svg" alt=""><h2 id="t-lag">Lag Remover</h2></div>
-    <p class="lead">Makes inZOI run smoother without changing how it looks. It cuts the small freezes you get while moving around town and keeps the game from jumping between fast and slow.</p>
-    <div class="actions">
-      <a class="btn primary" href="downloads/inzoi/Novulon-Lag-Remover.zip" download><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v11m0 0-4.5-4.5M12 15l4.5-4.5M5 20h14"/></svg>Download Lag Remover</a>
-      <span class="tags"><span class="tag free">Free</span><span class="tag">inZOI 0.10</span><span class="tag">In-game mod</span></span>
-    </div>
-    <span class="sub">Install</span>
-    <ol class="steps">
-      <li><b>Download</b><span>The .zip above</span></li>
-      <li><b>Unzip</b><span>Into <code class="path">Documents\inZOI\Mods</code>. It lands in the InGame folder there</span></li>
-      <li><b>Load a save</b><span>A small note appears. Press Details and pick your screen's speed (Hz)</span></li>
-      <li><b>Extra (optional)</b><span>With the game closed, open the Start-up fixes folder and run Apply Lag Remover</span></li>
-    </ol>
-    <span class="sub">What it does</span>
-    <div class="feats">
-      <div class="feat"><b>Steady frame rate</b><span>Tell it your screen's speed once, and it picks a frame limit that stays smooth instead of jumping around.</span></div>
-      <div class="feat"><b>Less loading while you move</b><span>Keeps more of the town ready in memory, so walking and driving don't stutter.</span></div>
-      <div class="feat"><b>Fewer sudden freezes</b><span>Gets effects ready while the game loads, not in the middle of playing.</span></div>
-      <div class="feat"><b>Same graphics</b><span>Nothing is turned down. Your settings stay exactly as they are.</span></div>
-      <div class="feat"><b>Easy to undo</b><span>Every fix has its own switch. Turn one off and your old setting comes back.</span></div>
-      <div class="feat"><b>Works with StatCheats</b><span>If you have StatCheats, you can open it from the same N button.</span></div>
-    </div>
-    <span class="sub">Inside the game</span>
-    <div class="gallery">
-      <figure><img src="img/inzoi-lag-1.jpg" alt="Lag Remover's note above the needs panel" loading="lazy"><figcaption>A small note when your save loads</figcaption></figure>
-      <figure><img src="img/inzoi-lag-2.jpg" alt="Lag Remover's Details window" loading="lazy"><figcaption>Turn each fix on or off</figcaption></figure>
+    <div class="gallery three">
+      <figure><img src="img/inzoi-ov-behavior.jpg" alt="Behavior tab" loading="lazy"><figcaption>How your zoi behaves</figcaption></figure>
+      <figure><img src="img/inzoi-ov-attraction.jpg" alt="Attraction tab" loading="lazy"><figcaption>How attractive you are</figcaption></figure>
+      <figure><img src="img/inzoi-ov-stats.jpg" alt="Cheats tab, money page" loading="lazy"><figcaption>Cheats for anyone</figcaption></figure>
+      <figure><img src="img/inzoi-ov-town.jpg" alt="Cheats tab, town page" loading="lazy"><figcaption>Who spawns, and who goes</figcaption></figure>
+      <figure><img src="img/inzoi-ov-relcards.jpg" alt="The game's Relationships list with Into you bars and the right-click menu" loading="lazy"><figcaption>Right-click a relationship</figcaption></figure>
+      <figure><img src="img/inzoi-ov-perf.jpg" alt="Performance tab" loading="lazy"><figcaption>Smoother, same graphics</figcaption></figure>
     </div>
   </div>
 </dialog>
